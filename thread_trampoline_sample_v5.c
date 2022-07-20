@@ -56,7 +56,7 @@ void *spinWait(void *arg){
 
   // Someone loaded an address into the trampoline
 #if DEBUG
-  printf("\t[*] Thread %lu: Trampoline at address %p set to %lu!\n", my_id, my_trampoline, *my_trampoline);
+  printf("\t[*] Thread %lu: Trampoline at address %p set to %p!\n", my_id, my_trampoline, *my_trampoline);
 #endif
 
   // Cast the address to a function pointer
@@ -95,7 +95,7 @@ int main( int argc, char **argv ){
   printf("\n");
   printf("\nValues of trampolines: \n");
   for(i = 0; i< numOfThreads; i++){
-    printf("Thread %lu: %lu\t", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("Thread %lu: %p\t", thread_args[i].thread_id, thread_args[i].trampoline_memory);
   }
   printf("\n");
   printf("\nAddresses of Functions - Func1: %p Func2: %p\n", &func1, &func2);
@@ -111,7 +111,7 @@ int main( int argc, char **argv ){
   for( i=0; i<numOfThreads; i+=2 ){
     thread_args[i].trampoline_memory = (uint64_t) &func1;
 #if DEBUG
-    printf("\tThread %lu trampoline set to %lu\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("\tThread %lu trampoline set to %p\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
 #endif
   }
   
@@ -119,10 +119,12 @@ int main( int argc, char **argv ){
   for( i=1; i<numOfThreads; i+=2 ){
     thread_args[i].trampoline_memory = (uint64_t) &func2;
 #if DEBUG
-    printf("\tThread %lu trampoline set to %lu\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("\tThread %lu trampoline set to %p\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
 #endif
   }
   
+  printf("\n");
+
   // close the threads
   for(i=0; i<numOfThreads; i++ ){
     pthread_join(thread_handles[i], NULL);
