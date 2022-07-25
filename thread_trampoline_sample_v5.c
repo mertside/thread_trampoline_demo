@@ -10,7 +10,9 @@
 #include <string.h>
 #include <pthread.h>
 
-#include <unistd.h> // for macOS
+#ifdef __APPLE__
+  #include <unistd.h> // for macOS
+#endif
 
 // ---------------------------------- MACROS
 #define DEBUG 1
