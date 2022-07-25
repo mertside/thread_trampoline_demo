@@ -40,6 +40,7 @@ void func1(){
 }
 
 // ---------------------------------- ENDSPINWAIT FUNCTION
+/*
 void endSpinWait(){
 #if DEBUG
   printf("Thread's work is done!\n");
@@ -47,6 +48,7 @@ void endSpinWait(){
   // This thread's work is done
   pthread_exit(NULL);
 }
+*/
 
 // ---------------------------------- SPINWAIT FUNCTION
 void *spinWait( void *arg ){
@@ -66,24 +68,35 @@ void *spinWait( void *arg ){
 
     // Someone loaded an address into the trampoline
 #if DEBUG
-    printf("\t[*] Thread %lu: Trampoline at address %p set to %p!\n", my_id, my_trampoline, *my_trampoline);
+    printf("\t[*] Thread %lu: Trampoline at address %p set to %p!\n", 
+           my_id, my_trampoline, *my_trampoline);
 #endif
 
-    // Cast the address to a function pointer
-    Func = (void (*)(void *))(*my_trampoline);
+    // check condition to exit
+    if((*my_trampoline) == 0xdeadbeef){ 
+#if DEBUG
+      printf("\t[*] Thread %lu: My work is done!\n", my_id);
+#endif
+      break;
+    } else {
+      // Cast the address to a function pointer
+      Func = (void (*)(void *))(*my_trampoline);
 
-    // Jump to the user-defined function
-    (*Func)();
+      // Jump to the user-defined function
+      (*Func)();
 
-    // Reset the trampoline address
-    *my_trampoline = 0x00ull;
-    //thread_args->trampoline_memory = 0x00ull;
+      // Reset the trampoline address
+      *my_trampoline = 0x00ull;
+      //thread_args->trampoline_memory = 0x00ull;
 
 #if DEBUG
-    printf("\t[*] Thread %lu: Returned from jump trampoline at address %p REset to %p!\n", my_id, my_trampoline, *my_trampoline);
+      printf("\t[*] Thread %lu: Returned from jump trampoline at address %p 
+              REset to %p!\n", my_id, my_trampoline, *my_trampoline);
 #endif
-  }
-
+    
+    }
+  } // END of infinite while
+  
   // This thread's work is done
   pthread_exit(NULL);
 }
@@ -108,15 +121,22 @@ int main( int argc, char **argv ){
 #if DEBUG
   printf("\nAddresses of trampolines: \n");
   for(i = 0; i< numOfThreads; i++){
-    printf("Thread %lu: %p\t", thread_args[i].thread_id, &(thread_args[i].trampoline_memory));
+    printf("Thread %lu: %p\t", thread_args[i].thread_id, 
+           &(thread_args[i].trampoline_memory));
   }
   printf("\n");
   printf("\nValues of trampolines: \n");
   for(i = 0; i< numOfThreads; i++){
-    printf("Thread %lu: %p\t", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("Thread %lu: %p\t", thread_args[i].thread_id, 
+           thread_args[i].trampoline_memory);
   }
   printf("\n");
-  printf("\nAddresses of Functions - \tFunc1: %p \tFunc2: %p \tEndSpinWait: %p\n", &func1, &func2, &endSpinWait);
+  printf("\nAddresses of Functions - \tFunc1: %p \tFunc2: %p\n", 
+         &func1, &func2);
+  /*
+  printf("\nAddresses of Functions - \tFunc1: %p \tFunc2: %p 
+          \tEndSpinWait: %p\n", &func1, &func2, &endSpinWait);
+  */
 #endif
   
   //sleep(2);
@@ -135,7 +155,8 @@ int main( int argc, char **argv ){
   for( i=0; i<numOfThreads; i+=2 ){
     thread_args[i].trampoline_memory = (uint64_t) &func1;
 #if DEBUG
-    printf("    Thread %lu trampoline set to %p\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("    Thread %lu trampoline set to %p\n", thread_args[i].thread_id, 
+           thread_args[i].trampoline_memory);
 #endif
   }
   
@@ -146,7 +167,8 @@ int main( int argc, char **argv ){
   for( i=1; i<numOfThreads; i+=2 ){
     thread_args[i].trampoline_memory = (uint64_t) &func2;
 #if DEBUG
-    printf("    Thread %lu trampoline set to %p\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+    printf("    Thread %lu trampoline set to %p\n", thread_args[i].thread_id, 
+           thread_args[i].trampoline_memory);
 #endif
   }
 
@@ -155,9 +177,11 @@ int main( int argc, char **argv ){
 
   // -- all threads jump to endSpinWait
   for( i=0; i<numOfThreads; i++ ){
-    thread_args[i].trampoline_memory = (uint64_t) &endSpinWait;
+    thread_args[i].trampoline_memory = (uint64_t) 0xdeadbeef;
+    //thread_args[i].trampoline_memory = (uint64_t) &endSpinWait;
 #if DEBUG
-  printf("    Thread %lu trampoline set to %p\n", thread_args[i].thread_id, thread_args[i].trampoline_memory);
+  printf("    Thread %lu trampoline set to %p for completion\n", 
+         thread_args[i].thread_id, thread_args[i].trampoline_memory);
 #endif
   }
 
