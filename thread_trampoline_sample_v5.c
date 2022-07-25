@@ -80,8 +80,8 @@ void *spinWait( void *arg ){
   //thread_args->trampoline_memory = 0x00ull;
 
 #if DEBUG
-  printf("\t[*] Thread %lu: Returned from jump trampoline at address %p 
-          REset to %p!\n", my_id, my_trampoline, *my_trampoline);
+  printf("\t[*] Thread %lu: Trampoline at address %p REset to %p!\n",                     
+         my_id, my_trampoline, *my_trampoline);
 #endif
 
   // TODO:TEST: Needs further testing
@@ -121,8 +121,9 @@ int main( int argc, char **argv ){
            thread_args[i].trampoline_memory);
   }
   printf("\n");
-  printf("\nAddresses of Functions - \tFunc1: %p \tFunc2: %p 
-          \tEndSpinWait: %p\n", &func1, &func2, &endSpinWait);
+  printf("\nAddresses of Functions - \tFunc1: %p \tFunc2: %p\n", 
+         &func1, &func2);
+  printf("\nAddresses of EndSpinWait: %p\n", &endSpinWait);
 #endif
   
   //sleep(2);
