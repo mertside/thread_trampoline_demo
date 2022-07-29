@@ -1,13 +1,14 @@
 /* 
  * _THREAD_TRAMPOLINE_SAMPLE_C_
  *
- * Version 6 - 2022/07/26
+ * Version 7 - 2022/07/28
  *
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+// #include <stdbool.h>
 #include <string.h>
 #include <pthread.h>
 
@@ -25,12 +26,17 @@ typedef struct args{
   volatile uint64_t trampoline_memory;
 } args;
 
+typedef enum {false, true} bool;
+
 // ---------------------------------- GLOBAL VARIABLES
 // Handles for each thread thread
 pthread_t thread_handles[NUM_THREADS];
 
 // Args struct for each thread
 args thread_args[NUM_THREADS];
+
+// Indicates whether threads are done
+volatile bool done = false;
 
 // ---------------------------------- FUNC2
 void func2(){
@@ -60,8 +66,8 @@ void *spinWait( void *arg ){
   uint64_t my_id = thread_args->thread_id;
   volatile uint64_t *my_trampoline = &(thread_args->trampoline_memory);
   
-  // Infinite loop to spinWait (...sleep;jump;sleep...)
-  while(1){  
+  // Loop to spinWait (...sleep;jump;sleep...)
+  while(!done){  
     // Function pointer for redirection
     void (*Func)() = NULL;
 
@@ -81,7 +87,9 @@ void *spinWait( void *arg ){
 #if DEBUG
       printf("\t[*] Thread %lu: My work is done!\n", my_id);
 #endif
-      break; // Break out of the infinite loop
+      // Break out of the loop 
+      done = true; 
+      // break; 
     } else {
       // Cast the address to a function pointer
       Func = (void (*)(void *))(*my_trampoline);
@@ -115,6 +123,25 @@ int main( int argc, char **argv ){
   if(argc > 1) {
     numOfThreads = atoi(argv[1]);
   }
+ 
+  // Set number of threads as an environment variable
+  // char envVar[50] = "";
+  char envName[40] = "NUM_OF_THREADS";
+  char envValue[10] = "";
+ 
+  sprintf(envValue, "%d", numOfThreads); 
+  
+  /*
+  strcpy(envVar, envName);
+  strcat(envVar, "=");
+  strcat(envVar, envValue); 
+  
+  putenv(envVar); // "NUM_OF_THREADS=8"
+  */
+  
+  setenv(envName, envValue, 1);  
+  
+  printf("\n[getenv] Number of threads: %d\n", atoi(getenv("NUM_OF_THREADS")));
 
   // initialize thread args
   for( i=0; i<numOfThreads; i++ ){

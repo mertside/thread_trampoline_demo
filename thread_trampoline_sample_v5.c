@@ -1,4 +1,5 @@
-/* _THREAD_TRAMPOLINE_SAMPLE_C_
+/* 
+ * _THREAD_TRAMPOLINE_SAMPLE_C_
  *
  * Version 5 - 2022/07/21
  *
