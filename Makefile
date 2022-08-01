@@ -24,6 +24,9 @@ version6: $(appName)_v6.c
 version7: $(appName)_v7.c                                                       
 	$(CC) -Wall $^ -lpthread -o $(appName)_v7.exe 
 
+version7alt: $(appName)_v7-alt.c                                                       
+	$(CC) -Wall $^ -lpthread -o $(appName)_v7-alt.exe
+
 test:
 	./$(appName)_v1.exe
 	./$(appName)_v2.exe
