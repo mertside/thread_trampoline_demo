@@ -11,10 +11,7 @@
 // #include <stdbool.h>
 #include <string.h>
 #include <pthread.h>
-
-#ifdef __APPLE__
-  #include <unistd.h> // for macOS
-#endif
+#include <unistd.h>     // Crucial for macOS
 
 // ---------------------------------- MACROS
 #define DEBUG 1
@@ -81,7 +78,7 @@ void *spinWait( void *arg ){
     // Someone loaded an address into the trampoline
 #if DEBUG
     fprintf(stdout, "\t[*] Thread %lu: Trampoline at address %p set to %p!\n", 
-           my_id, my_trampoline, *my_trampoline);
+           my_id, (void *) my_trampoline, (void *) *my_trampoline);
 #endif
 
     // Check condition to end spinWait loop
@@ -105,7 +102,7 @@ void *spinWait( void *arg ){
 
 #if DEBUG
       fprintf(stdout, "\t[*] Thread %lu: Trampoline at address %p REset %p!\n", 
-             my_id, my_trampoline, *my_trampoline);
+             my_id, (void *) my_trampoline, (void *) *my_trampoline);
 #endif
     
     }
@@ -149,6 +146,7 @@ int main( int argc, char **argv ){
           atoi(getenv("NUM_OF_THREADS")));
 #endif
 
+  fflush(stdout);  
   numOfThreads = atoi(getenv("NUM_OF_THREADS")); 
 
   // initialize thread args
@@ -167,7 +165,7 @@ int main( int argc, char **argv ){
   fprintf(stdout, "\nValues of trampolines: \n");
   for(i = 0; i< numOfThreads; i++){
     fprintf(stdout, "Thread %lu: %p\t", thread_args[i].thread_id, 
-           thread_args[i].trampoline_memory);
+           (void *) thread_args[i].trampoline_memory);
   }
   fprintf(stdout, "\n");
   fprintf(stdout, "\nAddresses of Functions - \tFunc1: %p \tFunc2: %p\n", 
@@ -194,7 +192,7 @@ int main( int argc, char **argv ){
     thread_args[i].trampoline_memory = (uint64_t) &func1;
 #if DEBUG
     fprintf(stdout, "    Thread %lu trampoline set to %p\n", 
-            thread_args[i].thread_id, thread_args[i].trampoline_memory);
+            thread_args[i].thread_id,(void *)thread_args[i].trampoline_memory);
 #endif
   }
   
@@ -206,7 +204,7 @@ int main( int argc, char **argv ){
     thread_args[i].trampoline_memory = (uint64_t) &func2;
 #if DEBUG
     fprintf(stdout, "    Thread %lu trampoline set to %p\n", 
-            thread_args[i].thread_id, thread_args[i].trampoline_memory);
+            thread_args[i].thread_id,(void *)thread_args[i].trampoline_memory);
 #endif
   }
 
@@ -222,7 +220,7 @@ int main( int argc, char **argv ){
     // thread_args[i].trampoline_memory = (uint64_t) &endSpinWait;
 #if DEBUG
   fprintf(stdout, "    Thread %lu trampoline set to %p for completion\n", 
-          thread_args[i].thread_id, thread_args[i].trampoline_memory);
+          thread_args[i].thread_id, (void *) thread_args[i].trampoline_memory);
 #endif
   }
   
