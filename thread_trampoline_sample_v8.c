@@ -11,7 +11,7 @@
 // #include <stdbool.h>
 #include <string.h>
 #include <pthread.h>
-#include <unistd.h>     // Crucial for macOS
+#include <unistd.h> // Crucial for sleeping on macOS
 
 // ---------------------------------- MACROS
 #define DEBUG 1
@@ -87,8 +87,7 @@ void *spinWait( void *arg ){
       fprintf(stdout, "\t[*] Thread %lu: My work is done!\n", my_id);
 #endif
       // Break out of the loop 
-      done = true; 
-      // break; 
+      done = true; // break; 
     } else {
       // Cast the address to a function pointer
       Func = (void (*)(void *))(*my_trampoline);
@@ -97,8 +96,7 @@ void *spinWait( void *arg ){
       (*Func)();
 
       // Reset the trampoline address
-      *my_trampoline = 0x00ull;
-      //thread_args->trampoline_memory = 0x00ull;
+      *my_trampoline = 0x00ull; // thread_args->trampoline_memory = 0x00ull;
 
 #if DEBUG
       fprintf(stdout, "\t[*] Thread %lu: Trampoline at address %p REset %p!\n", 
@@ -125,29 +123,17 @@ int main( int argc, char **argv ){
   }
  
   // Set number of threads as an environment variable
-  // char envVar[50] = "";
   char envName[40] = "NUM_OF_THREADS";
   char envValue[10] = "";
- 
-  sprintf(envValue, "%d", numOfThreads); 
-  
-  /*
-  strcpy(envVar, envName);
-  strcat(envVar, "=");
-  strcat(envVar, envValue); 
-  
-  putenv(envVar); // "NUM_OF_THREADS=8"
-  */
-  
+  sprintf(envValue, "%d", numOfThreads);
   setenv(envName, envValue, 1);  
+  numOfThreads = atoi(getenv("NUM_OF_THREADS"));  
 
 #if DEBUG  
   fprintf(stdout, "\n[getenv] Number of threads: %d\n", 
           atoi(getenv("NUM_OF_THREADS")));
-#endif
-
   fflush(stdout);  
-  numOfThreads = atoi(getenv("NUM_OF_THREADS")); 
+#endif
 
   // initialize thread args
   for( i=0; i<numOfThreads; i++ ){
@@ -195,7 +181,8 @@ int main( int argc, char **argv ){
             thread_args[i].thread_id,(void *)thread_args[i].trampoline_memory);
 #endif
   }
-  
+ 
+  fflush(stdout); 
   //sleep(2);
   //printf("\n");
 
@@ -209,7 +196,7 @@ int main( int argc, char **argv ){
   }
 
   fflush(stdout);
-  sleep(2); // FIXME:HACK: Without sleep Func1 and Func2 does NOT execute
+  //sleep(2); // FIXME:HACK: Without sleep Func1 and Func2 does NOT execute
   //printf("\n");
 
   // -- all threads end spinWait
