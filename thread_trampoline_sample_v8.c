@@ -209,7 +209,7 @@ int main( int argc, char **argv ){
   }
 
   fflush(stdout);
-  //sleep(2); // FIXME:HACK: Without sleep Func1 and Func2 does NOT execute
+  sleep(2); // FIXME:HACK: Without sleep Func1 and Func2 does NOT execute
   //printf("\n");
 
   // -- all threads end spinWait
