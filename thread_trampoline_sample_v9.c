@@ -1,7 +1,7 @@
 /* 
  * _THREAD_TRAMPOLINE_SAMPLE_C_
  *
- * Version 8 - 2022/08/01
+ * Version 9 - 2022/08/08
  *
  */
 
@@ -13,11 +13,12 @@
 #include <pthread.h>
 #include <unistd.h> // Crucial for sleeping on macOS
 
-// ---------------------------------- MACROS
+// -------------------------------------------------------------------- MACROS
 #define DEBUG 1
-#define NUM_THREADS 8
+#define MAX_NUM_OF_THREADS 16
+//#define MAX_NUM_LENGTH 10
 
-// ---------------------------------- STRUCTS
+// ------------------------------------------------------------------- STRUCTS
 typedef struct args{
   uint64_t thread_id;
   volatile uint64_t trampoline_memory;
@@ -25,29 +26,29 @@ typedef struct args{
 
 typedef enum {false, true} bool;
 
-// ---------------------------------- GLOBAL VARIABLES
+// ---------------------------------------------------------- GLOBAL VARIABLES
 // Handles for each thread thread
-pthread_t thread_handles[NUM_THREADS];
+pthread_t thread_handles[MAX_NUM_OF_THREADS];
 
 // Args struct for each thread
-args thread_args[NUM_THREADS];
+args thread_args[MAX_NUM_OF_THREADS];
 
 // Indicates whether threads are done
 volatile bool done = false;
 
-// ---------------------------------- FUNC2
+// --------------------------------------------------------------------- FUNC2
 void func2(){
   fprintf(stdout, "I am odd!\n");
   fflush(stdout);
 }
 
-// ---------------------------------- FUNC1
+// --------------------------------------------------------------------- FUNC1
 void func1(){
   fprintf(stdout, "I am even!\n");
   fflush(stdout);
 }
 
-// ---------------------------------- ENDSPINWAIT FUNCTION
+// ------------------------------------------------------ ENDSPINWAIT FUNCTION
 /*
 void endSpinWait(){
 #if DEBUG
@@ -58,7 +59,7 @@ void endSpinWait(){
 }
 */
 
-// ---------------------------------- SPINWAIT FUNCTION
+// --------------------------------------------------------- SPINWAIT FUNCTION
 void *spinWait( void *arg ){
 
   args *thread_args = (args*)(arg);
@@ -111,27 +112,47 @@ void *spinWait( void *arg ){
   pthread_exit(NULL);
 }
 
-// ---------------------------------- MAIN FUNCTION
+// ------------------------------------------------------------- MAIN FUNCTION
 int main( int argc, char **argv ){
 
   int i = 0;
-    
-  // can take number of threads as args
-  int numOfThreads = NUM_THREADS;
-  if(argc > 1) {
-    numOfThreads = atoi(argv[1]);
+  int numOfThreads = MAX_NUM_OF_THREADS; 
+  
+  // Can take number of threads as args
+  if(argc > 1){                                                                 
+    numOfThreads = atoi(argv[1]);                                               
+  } else { 
+    // Get number of threads from the environment 
+    //char *str = malloc( sizeof(char) * MAX_NUM_LENGTH );
+    //str = getenv("NUM_OF_THREADS");
+    //char str[MAX_NUM_LENGTH];
+    //strcpy(str, getenv("NUM_OF_THREADS"));
+    char *str = getenv("NUM_OF_THREADS");
+    // Is the environment variable set appropriately?
+    if(str == NULL || atoi(str) <= 0 || atoi(str) > MAX_NUM_OF_THREADS){
+      if(str == NULL) {
+        // NOT found!
+        fprintf(stderr, "\nNUM_OF_THREADS not set; set environment first!\n");
+      } else { 
+        // NOT a reasonable number!  
+        fprintf(stderr, "\nNUM_OF_THREADS should be between %d and %d\n",       
+                1, MAX_NUM_OF_THREADS);  
+      }
+      // Set MAX number of threads as an environment variable
+      const char *envName = "NUM_OF_THREADS";                                          
+      char envValue[10] = "";           
+      sprintf(envValue, "%d", numOfThreads);                                       
+      setenv(envName, envValue, 1);                                                 
+    } 
+    numOfThreads = atoi(getenv("NUM_OF_THREADS"));
+    //free(str);  
   }
- 
-  // Set number of threads as an environment variable
-  char envName[40] = "NUM_OF_THREADS";
-  char envValue[10] = "";
-  sprintf(envValue, "%d", numOfThreads);
-  setenv(envName, envValue, 1);  
-  numOfThreads = atoi(getenv("NUM_OF_THREADS"));  
+
+  //putenv("NUM_OF_THREADS=2"); // "NUM_OF_THREADS=8"
+  //numOfThreads=atoi(getenv("NUM_OF_THREADS"));
 
 #if DEBUG  
-  fprintf(stdout, "\n[getenv] Number of threads: %d\n", 
-          atoi(getenv("NUM_OF_THREADS")));
+  fprintf(stdout, "\nNumber of threads: %d\n", numOfThreads);
   fflush(stdout);  
 #endif
 
@@ -164,7 +185,7 @@ int main( int argc, char **argv ){
   //printf("\n");
 
   // create the threads
-  for( i=0; i<numOfThreads; i++ ){
+  for(i=0; i<numOfThreads; i++){
     pthread_create(&thread_handles[i], NULL, spinWait, &thread_args[i]);
   }
 
@@ -174,7 +195,7 @@ int main( int argc, char **argv ){
 
   // tell each thread to jump to a specific function
   // -- even threads jump to Func1
-  for( i=0; i<numOfThreads; i+=2 ){
+  for(i=0; i<numOfThreads; i+=2){
     thread_args[i].trampoline_memory = (uint64_t) &func1;
 #if DEBUG
     fprintf(stdout, "    Thread %lu trampoline set to %p\n", 
@@ -187,7 +208,7 @@ int main( int argc, char **argv ){
   //printf("\n");
 
   // -- odd threads jump to Func2
-  for( i=1; i<numOfThreads; i+=2 ){
+  for(i=1; i<numOfThreads; i+=2){
     thread_args[i].trampoline_memory = (uint64_t) &func2;
 #if DEBUG
     fprintf(stdout, "    Thread %lu trampoline set to %p\n", 
@@ -200,7 +221,7 @@ int main( int argc, char **argv ){
   //printf("\n");
 
   // -- all threads end spinWait
-  for( i=0; i<numOfThreads; i++ ){
+  for(i=0; i<numOfThreads; i++){
     // Pass a specific address to end spinWait
     thread_args[i].trampoline_memory = (uint64_t) 0xdeadbeef;
     // Jump to a specific function to end spinWait
@@ -216,7 +237,7 @@ int main( int argc, char **argv ){
   //printf("\n");
 
   // close the threads
-  for( i=0; i<numOfThreads; i++ ){
+  for(i=0; i<numOfThreads; i++){
     pthread_join(thread_handles[i], NULL);
   }
 
