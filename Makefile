@@ -1,7 +1,8 @@
 CC=gcc
 appName=thread_trampoline_sample
+poolAppName=thread_pool_sample
 
-all: version1 version2 version3 version4 version5 version6 version7 version8 version9
+all: version9 
 
 version1: $(appName)_v1.c
 	$(CC) -Wall $^ -lpthread -o $(appName)_v1.exe
@@ -32,6 +33,9 @@ version8: $(appName)_v8.c
 
 version9: $(appName)_v9.c                                                       
 	$(CC) -Wall $^ -lpthread -o $(appName)_v9.exe 
+
+pool1: $(poolAppName)_v1.c
+	$(CC) -Wall $^ -lpthread -o $(poolAppName)_v1.exe  
 
 test:
 	./$(appName)_v1.exe
