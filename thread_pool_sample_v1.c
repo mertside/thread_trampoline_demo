@@ -14,7 +14,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include "tpool.h"
+#include "threadpool.h"
 
 // ---------------------------------------------------------- GLOBAL VARIABLES
 static const size_t num_threads = 4;

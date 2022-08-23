@@ -1,11 +1,11 @@
 /*                                                                              
- * _TPOOL_H_                                                       
+ * _THREADPOOL_H_                                                       
  *
  * on 2022/08/22                                                       
  *                                                                              
  */   
-#ifndef __TPOOL_H__
-#define __TPOOL_H__
+#ifndef __THREADPOOL_H__
+#define __THREADPOOL_H__
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -253,4 +253,4 @@ void tpool_wait(tpool_t *tm)
   pthread_mutex_unlock(&(tm->work_mutex));
 }
 
-#endif /* __TPOOL_H__ */
+#endif /* __THREADPOOL_H__ */

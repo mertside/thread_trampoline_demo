@@ -37,6 +37,9 @@ version9: $(appName)_v9.c
 pool1: $(poolAppName)_v1.c
 	$(CC) -Wall $^ -lpthread -o $(poolAppName)_v1.exe  
 
+pool2: $(poolAppName)_v2.c                                                    
+	$(CC) -Wall $^ -lpthread -o $(poolAppName)_v2.exe
+
 test:
 	./$(appName)_v1.exe
 	./$(appName)_v2.exe
