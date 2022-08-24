@@ -1,29 +1,19 @@
 /*                                                                              
- * _THREADPOOL_H_                                                       
+ * _THREADPOOL_C_                                                       
  *
- * on 2022/08/22                                                       
+ * on 2022/08/22                                                      
  *                                                                              
  */   
-#ifndef __THREADPOOL_H__
-#define __THREADPOOL_H__
 
-#include <stdbool.h>
-#include <stddef.h>
+#include <stdlib.h>                                                             
+#include <stdio.h>                                                              
+#include <pthread.h>                                                            
+#include <unistd.h>                                                             
+                                                                                
+#include "threadpool.h" 
 
 // ---------------------------------------------------------------- PROTOTYPES
-struct tpool;
-typedef struct tpool tpool_t;
 
-typedef void (*thread_func_t)(void *arg);
-
-tpool_t *tpool_create(size_t num);
-void tpool_destroy(tpool_t *tm);
-
-// Adds work to the queue for processing. 
-bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg);
-
-// Blocks until all work has been completed.
-void tpool_wait(tpool_t *tm);
 
 // --------------------------------------------------------------- OBJECT DATA
 
@@ -36,13 +26,13 @@ struct tpool_work {
 typedef struct tpool_work tpool_work_t;
 
 struct tpool {
-  tpool_work_t    *work_first;    // used for push/pop
-  tpool_work_t    *work_last;     // used for push/pop
+  tpool_work_t    *work_head;     // queue head pointer
+  tpool_work_t    *work_tail;     // queue tail pointer
   pthread_mutex_t  work_mutex;    // single mutex for all locking
   pthread_cond_t   work_cond;     // signal threads; there is work to process
   pthread_cond_t   working_cond;  // signal; no threads processing
   size_t           working_cnt;   // number of threads actively processing work
-  size_t           thread_cnt;    // number of threads alive 
+  size_t           num_threads;   // number of threads alive 
   bool             stop;          // stops the threads
 };
 
@@ -71,7 +61,7 @@ static void tpool_work_destroy(tpool_work_t *work)
 
 // --------------------------------------------------------- GET WORK FUNCTION
 // Handles pulling an object from the list and 
-//   maintain the list work_first and work_last references.
+//   maintain the list work_head and work_tail references.
 static tpool_work_t *tpool_work_get(tpool_t *tm)
 {
   tpool_work_t *work;
@@ -79,15 +69,15 @@ static tpool_work_t *tpool_work_get(tpool_t *tm)
   if (tm == NULL)
     return NULL;
 
-  work = tm->work_first;
+  work = tm->work_head;
   if (work == NULL)
     return NULL;
 
   if (work->next == NULL) {
-    tm->work_first = NULL;
-    tm->work_last  = NULL;
+    tm->work_head = NULL;
+    tm->work_tail = NULL;
   } else {
-    tm->work_first = work->next;
+    tm->work_head = work->next;
   }
 
   return work;
@@ -106,7 +96,7 @@ static void *tpool_worker(void *arg)
     pthread_mutex_lock(&(tm->work_mutex));
 
     // Check if any work available for processing.
-    while (tm->work_first == NULL && !tm->stop)
+    while (tm->work_head == NULL && !tm->stop)
       pthread_cond_wait(&(tm->work_cond), &(tm->work_mutex));
 
     // Check if the pool has requested that all threads stop and exit.
@@ -126,13 +116,13 @@ static void *tpool_worker(void *arg)
     // The work has been processed.
     pthread_mutex_lock(&(tm->work_mutex));
     tm->working_cnt--;
-    if (!tm->stop && tm->working_cnt == 0 && tm->work_first == NULL)
+    if (!tm->stop && tm->working_cnt == 0 && tm->work_head == NULL)
       pthread_cond_signal(&(tm->working_cond));
     pthread_mutex_unlock(&(tm->work_mutex));
   }
 
   // Arrival from break out.
-  tm->thread_cnt--;
+  tm->num_threads--;
   pthread_cond_signal(&(tm->working_cond));
   pthread_mutex_unlock(&(tm->work_mutex));
   return NULL;
@@ -150,15 +140,15 @@ tpool_t *tpool_create(size_t num)
     num = 2;
   // XXX:IDEA: May set the number of core/processors + 1 as the default...
 
-  tm             = calloc(1, sizeof(*tm));
-  tm->thread_cnt = num;
+  tm              = calloc(1, sizeof(*tm));
+  tm->num_threads = num;
 
   pthread_mutex_init(&(tm->work_mutex), NULL);
   pthread_cond_init(&(tm->work_cond), NULL);
   pthread_cond_init(&(tm->working_cond), NULL);
 
-  tm->work_first = NULL;
-  tm->work_last  = NULL;
+  tm->work_head = NULL;
+  tm->work_tail = NULL;
 
   // The requested threads are started and tpool_worker is specified.
   for (i=0; i<num; i++) {
@@ -184,7 +174,7 @@ void tpool_destroy(tpool_t *tm)
 
   // Throwing away all pending work; caller BEWARE!!!
   pthread_mutex_lock(&(tm->work_mutex));
-  work = tm->work_first;
+  work = tm->work_head;
   while (work != NULL) {
     work2 = work->next;
     tpool_work_destroy(work);
@@ -220,13 +210,13 @@ bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg)
     return false;
 
   pthread_mutex_lock(&(tm->work_mutex));
-  // Adding the object to the liked list. 
-  if (tm->work_first == NULL) {
-    tm->work_first = work;
-    tm->work_last  = tm->work_first;
+  // Adding the object to the linked list. 
+  if (tm->work_head == NULL) {
+    tm->work_head = work;
+    tm->work_tail = tm->work_head;
   } else {
-    tm->work_last->next = work;
-    tm->work_last       = work;
+    tm->work_tail->next = work;
+    tm->work_tail       = work;
   }
 
   pthread_cond_broadcast(&(tm->work_cond));
@@ -244,7 +234,7 @@ void tpool_wait(tpool_t *tm)
   pthread_mutex_lock(&(tm->work_mutex));
   while (1) {
     if ((!tm->stop && tm->working_cnt != 0) || 
-        (tm->stop && tm->thread_cnt != 0)) {
+        (tm->stop && tm->num_threads != 0)) {
       pthread_cond_wait(&(tm->working_cond), &(tm->work_mutex));
     } else {
       break;
@@ -253,4 +243,3 @@ void tpool_wait(tpool_t *tm)
   pthread_mutex_unlock(&(tm->work_mutex));
 }
 
-#endif /* __THREADPOOL_H__ */

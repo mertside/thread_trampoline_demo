@@ -25,7 +25,7 @@
 // --------------------------------------------------------------------- FUNC2  
 void func2()
 {                                                                     
-  fprintf(stdout, "I am odd!\n");                                               
+  fprintf(stdout, "I am func2!\n");                                               
   fflush(stdout);
   sleep(1);                                                               
 }                                                                               
@@ -33,7 +33,7 @@ void func2()
 // --------------------------------------------------------------------- FUNC1  
 void func1()
 {                                                                     
-  fprintf(stdout, "I am even!\n");                                              
+  fprintf(stdout, "I am func1!\n");                                              
   fflush(stdout);                                                               
   sleep(1);
 } 
@@ -79,18 +79,27 @@ int main(int argc, char **argv)
   pool = tpool_create(numOfThreads);   
 
   // tell each thread to jump to a specific function                            
-  // -- even threads jump to Func1                                              
-  for(i=0; i<numOfThreads; i+=2){                                               
+  // -- jump to Func1                                              
+  for(i=0; i<numOfThreads; i+=1){                                               
     tpool_add_work(pool, func1, NULL);     
 #if DEBUG                                                                       
-    fprintf(stdout, "    Even threads added for Func1\n");                       
+    fprintf(stdout, "    Executing Func1\n");                       
 #endif 
-  }  
-  // -- odd threads jump to Func2                                               
-  for(i=1; i<numOfThreads; i+=2){ 
+  } 
+  // -- sleep 
+  sleep(1); 
+  int sleepTimer = 5;                                                          
+  for(i=0; i<sleepTimer; i+=1){                                               
+#if DEBUG                                                                       
+    fprintf(stdout, "    Sleeping for %d seconds\n", (sleepTimer-i));                                   
+#endif        
+    sleep(1);                                                   
+  }      
+  // -- jump to Func2                                               
+  for(i=0; i<numOfThreads; i+=1){ 
     tpool_add_work(pool, func2, NULL);  
 #if DEBUG                                                                       
-    fprintf(stdout, "    Odd threads added for Func2\n");                    
+    fprintf(stdout, "    Executing Func2\n");                    
 #endif 
   }  
 
