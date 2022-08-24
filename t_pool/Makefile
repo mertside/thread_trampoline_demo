@@ -2,7 +2,7 @@ CC=gcc
 appName=thread_trampoline_sample
 poolAppName=thread_pool_sample
 
-all: pool1 pool2 
+all: pool2 
 
 pool1: $(poolAppName)_v1.c
 	$(CC) -Wall $^ -lpthread -o $(poolAppName)_v1.exe  

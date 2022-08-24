@@ -27,7 +27,6 @@ bool tpool_add_work(tpool_t *tm, thread_func_t func, void *arg);
 void tpool_wait(tpool_t *tm);
 
 // --------------------------------------------------------------- OBJECT DATA  
-                                                                                
 // Simple linked list which stores the function to call and its arguments.      
 struct tpool_work {                                                             
   thread_func_t      func;                                                      
