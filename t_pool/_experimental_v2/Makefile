@@ -4,8 +4,8 @@ poolAppName=thread_pool_sample
 
 all: threadpool.o version2
 
-version2: threadpool.o $(poolAppName)_v2.c 
-	$(CC) $(CFLAGS) threadpool.o $(poolAppName)_v2.c -o $(poolAppName)_v2.out
+version2: threadpool.o $(poolAppName)_v3.c 
+	$(CC) $(CFLAGS) threadpool.o $(poolAppName)_v3.c -o $(poolAppName)_v2.out
 
 threadpool.o: threadpool.c threadpool.h
 	$(CC) $(CFLAGS) -c threadpool.c
