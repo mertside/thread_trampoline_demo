@@ -24,25 +24,24 @@
   #             and aggregated transfers
   #---------------------------------------------------
   # Calling Convention
-  #   - a0 = base src address
-  #   - a1 = base dest address
-  #   - a2 = remote pe
-  #   - a3 = nelems
-  #   - a4 = stride (in bytes)
+  #   - X0 = a0 = base src address
+  #   - X1 = a1 = base dest address
+  #   - X2 = a2 = remote pe
+  #   - X3 = a3 = nelems
+  #   - X4 = a4 = stride (in bytes)
   #---------------------------------------------------
 
   .global __xbrtime_get_u8_seq
   .type __xbrtime_get_u8_seq, @function
 __xbrtime_get_u8_seq:
-  ADD e10, a2, 0
-  MOV x31, zero
+  MOV X15, XZR
 .get_u8_seq:
-  LDR x30, 0(a0)
-  ADD a0, a0, a4
-  ADD x31,x31,1
-  STR x30, 0(a1)
-  ADD a1, a1, a4
-  BNE x31,a3,.get_u8_seq
+  LDR X14, [X0]
+  ADD X0, X0, X4
+  ADD X15, X15, #1
+  STR X14, [X1]
+  ADD X1, X1, X4
+  BNE X15, X3, .get_u8_seq
   RET
   .size __xbrtime_get_u8_seq, .-__xbrtime_get_u8_seq
 
@@ -51,15 +50,14 @@ __xbrtime_get_u8_seq:
   .global __xbrtime_put_u8_seq
   .type __xbrtime_put_u8_seq, @function
 __xbrtime_put_u8_seq:
-  ADD e11, a2, 0
-  MOV x31, zero
+  MOV X15, XZR
 .put_u8_seq:
-  LDR x30, 0(a0)
-  ADD a0, a0, a4
-  ADD x31,x31,1
-  STR x30, 0(a1)
-  ADD a1,a1,a4
-  BNE x31,a3,.put_u8_seq
+  LDR X14, [X0]
+  ADD X0, X0, X4
+  ADD X15, X15, #1
+  STR X14, [X1]
+  ADD X1, X1, X4
+  BNE x15, X3, .put_u8_seq
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
 
