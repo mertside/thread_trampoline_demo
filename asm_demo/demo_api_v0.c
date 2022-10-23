@@ -69,7 +69,7 @@ void xbrtime_ulonglong_get(unsigned long long *dest, const unsigned long long *s
     return;
   }else if( (stride != 1) || (nelems == 1)){
     /* sequential execution */
-    __xbrtime_get_u8_seq(src,__xbrtime_ltor((uint64_t)(src),pe),
+    __xbrtime_get_u8_seq(__xbrtime_ltor((uint64_t)(src),pe),
                          (uint64_t)(dest),
                          xbrtime_decode_pe(pe),
                          (uint32_t)(nelems),
@@ -86,7 +86,7 @@ void xbrtime_ulonglong_put(unsigned long long *dest, const unsigned long long *s
   }else if( (stride != 1) || (nelems == 1)){
     /* sequential execution */
     __xbrtime_put_u8_seq((uint64_t)(src),
-                         dest,__xbrtime_ltor((uint64_t)(dest),pe),
+                         __xbrtime_ltor((uint64_t)(dest),pe),
                          xbrtime_decode_pe(pe),
                          (uint32_t)(nelems),
                          (uint32_t)(stride*sizeof(unsigned long long)));
