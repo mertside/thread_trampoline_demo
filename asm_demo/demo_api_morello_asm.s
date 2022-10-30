@@ -41,7 +41,8 @@ __xbrtime_get_u8_seq:
   ADD X15, X15, #1
   STR X14, [X1]
   ADD X1, X1, X4
-  BNE X15, X3, .get_u8_seq
+  CMP x15, X3
+  BNE .get_u8_seq
   RET
   .size __xbrtime_get_u8_seq, .-__xbrtime_get_u8_seq
 
@@ -57,7 +58,8 @@ __xbrtime_put_u8_seq:
   ADD X15, X15, #1
   STR X14, [X1]
   ADD X1, X1, X4
-  BNE x15, X3, .put_u8_seq
+  CMP x15, X3
+  BNE .put_u8_seq
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
 
