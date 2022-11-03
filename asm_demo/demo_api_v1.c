@@ -23,43 +23,12 @@ void __xbrtime_put_u8_seq( uint64_t base_src, uint64_t base_dest, uint32_t pe,
 
 // ------------------------------------------------------------------ ASSEMBLY
 /*
-
 __asm__ __volatile__ ( "...;"
                        "...;" 
                       : ... );
-
-  .global __xbrtime_get_u8_seq
-  .type __xbrtime_get_u8_seq, @function
-__xbrtime_get_u8_seq:
-  eaddie e10, a2, 0
-  mv x31, zero
-.get_u8_seq:
-  eld x30, 0(a0)
-  add a0, a0, a4
-  add x31,x31,1
-  sd x30, 0(a1)
   add a1, a1, a4
   bne x31,a3,.get_u8_seq
   ret
-  .size __xbrtime_get_u8_seq, .-__xbrtime_get_u8_seq
-
-  #---------------------------------------------------
-
-  .global __xbrtime_put_u8_seq
-  .type __xbrtime_put_u8_seq, @function
-__xbrtime_put_u8_seq:
-  eaddie e11, a2, 0
-  mv x31, zero
-.put_u8_seq:
-  ld x30, 0(a0)
-  add a0, a0, a4
-  add x31,x31,1
-  esd x30, 0(a1)
-  add a1,a1,a4
-  bne x31,a3,.put_u8_seq
-  ret
-  .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
-
 */
 
 // ----------------------------------------------------------- U8 GET FUNCTION
