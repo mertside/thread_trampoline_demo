@@ -91,8 +91,10 @@ int main(int argc, char **argv) {
   arr_B           = (uint64_t *)(malloc( len * sz )); 
   arr_C           = (uint64_t *)(malloc( len * sz )); 
 
+  int num       = 0; 
   for(i=0; i < len; i++) {
-    arr_A[i]    = i + 2;
+    num        += 2;
+    arr_A[i]    = num;
     arr_B[i]    = 0;
     arr_C[i]    = 1;
   }
