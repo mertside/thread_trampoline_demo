@@ -116,8 +116,8 @@ int main(int argc, char **argv) {
   printf("TESTING PUT...\n");
   printf("\t put src:B dst:A \n");
   for(i=0; i < len; i++) {
-    xbrtime_ulonglong_put((unsigned long long *)(arr_B),
-                          (unsigned long long *)(arr_A),
+    xbrtime_ulonglong_put((unsigned long long *)(arr_B[i]),
+                          (unsigned long long *)(arr_A[i]),
                           1,
                           len,
                           sz );
