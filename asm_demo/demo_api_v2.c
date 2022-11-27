@@ -116,8 +116,8 @@ int main(int argc, char **argv) {
   printf("TESTING PUT...\n");
   printf("\t put src:B dst:A \n");
   for(i=0; i < len; i++) {
-    xbrtime_ulonglong_put((unsigned long long *)(arr_B+sz),
-                          (unsigned long long *)(arr_A+sz),
+    xbrtime_ulonglong_put((unsigned long long *)(arr_B) + (i * sz),
+                          (unsigned long long *)(arr_A) + (i * sz),
                           1,
                           len,
                           sz );
@@ -141,8 +141,8 @@ int main(int argc, char **argv) {
   printf("TESTING GET...\n");
   printf("\t get src:C dst:A \n");
   for(i=0; i < len; i++) {
-    xbrtime_ulonglong_get((unsigned long long *)(arr_C+sz),
-                          (unsigned long long *)(arr_A+sz),
+    xbrtime_ulonglong_get((unsigned long long *)(arr_C) + (i * sz),
+                          (unsigned long long *)(arr_A) + (i * sz),
                           1,
                           len,
                           sz );
