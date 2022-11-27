@@ -67,7 +67,7 @@ void xbrtime_ulonglong_put(unsigned long long *dest, const unsigned long long *s
 void print_array(uint64_t *array, size_t length) {
   int i = 0;
   for (i = 0; i < length; i++) { 
-    printf("%llu \n", array[i]); 
+    printf("%lu ", array[i]); 
   }
 }
 
