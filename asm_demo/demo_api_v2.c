@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
   arr_C           = (uint64_t *)(malloc( len * sz )); 
 
   for(i=0; i < len; i++) {
-    arr_A[i]    = i + 1;
+    arr_A[i]    = i + 2;
     arr_B[i]    = 0;
     arr_C[i]    = 1;
   }
@@ -109,11 +109,14 @@ int main(int argc, char **argv) {
   print_array(arr_C, len);
   printf("\n"); 
 
+  printf("\n");
+
   printf("TESTING PUT...\n");
-  xbrtime_ulonglong_put((unsigned long long *)(arr_A),
-                        (unsigned long long *)(arr_B),
+  printf("\t put src:B dst:A \n");
+  xbrtime_ulonglong_put((unsigned long long *)(arr_B),
+                        (unsigned long long *)(arr_A),
                         1,
-                        len,
+                        len * sz,
                         sz );
   // ======================================================  
   
@@ -129,11 +132,14 @@ int main(int argc, char **argv) {
   print_array(arr_C, len);
   printf("\n");
 
+  printf("\n");
+
   printf("TESTING GET...\n");
+  printf("\t get src:C dst:A \n");
   xbrtime_ulonglong_get((unsigned long long *)(arr_C),
                         (unsigned long long *)(arr_A),
                         1,
-                        len,
+                        len * sz,
                         sz );  
   // ======================================================
   
