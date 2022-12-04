@@ -32,11 +32,12 @@ __asm__ __volatile__ ( "...;"
 */
 
 // ----------------------------------------------------------- U8 GET FUNCTION
-void xbrtime_ulonglong_get(unsigned long long *dest, const unsigned long long *src,
-                     size_t nelems, int stride, int pe){
+void xbrtime_ulonglong_get(unsigned long long *dest, 
+                           const unsigned long long *src, 
+                           size_t nelems, int stride, int pe){
   if(nelems == 0){
     return;
-  }else if( (stride != 1) || (nelems == 1)){
+  }else /*if( (stride != 1) || (nelems == 1))*/{
     /* sequential execution */
     __xbrtime_get_u8_seq(src,//__xbrtime_ltor((uint64_t)(src),pe),
                          (uint64_t)(dest),
@@ -44,15 +45,16 @@ void xbrtime_ulonglong_get(unsigned long long *dest, const unsigned long long *s
                          (uint32_t)(nelems),
                          (uint32_t)(stride*sizeof(unsigned long long)));
   }
-  //__xbrtime_asm_fence();
+  __xbrtime_asm_fence();
 }
 
 // ----------------------------------------------------------- U8 PUT FUNCTION
-void xbrtime_ulonglong_put(unsigned long long *dest, const unsigned long long *src,
-                     size_t nelems, int stride, int pe){
+void xbrtime_ulonglong_put(unsigned long long *dest, 
+                           const unsigned long long *src,
+                           size_t nelems, int stride, int pe){
   if(nelems == 0){
     return;
-  }else if( (stride != 1) || (nelems == 1)){
+  }else /*if( (stride != 1) || (nelems == 1))*/{
     /* sequential execution */
     __xbrtime_put_u8_seq((uint64_t)(src),
                          dest,//__xbrtime_ltor((uint64_t)(dest),pe),
@@ -60,7 +62,7 @@ void xbrtime_ulonglong_put(unsigned long long *dest, const unsigned long long *s
                          (uint32_t)(nelems),
                          (uint32_t)(stride*sizeof(unsigned long long)));
   }
-  //__xbrtime_asm_fence();
+  __xbrtime_asm_fence();
 }
 
 // --------------------------------------------------------------- PRINT ARRAY
@@ -77,7 +79,6 @@ int main(int argc, char **argv) {
   int       rtn = 0;
   //uint64_t *ptr = NULL;
   size_t     sz = _ALLOC_SIZE_;
-
   int         i = 0;
   int       len = 8;
 
@@ -114,21 +115,12 @@ int main(int argc, char **argv) {
   printf("\n");
 
   printf("TESTING PUT...\n");
-  printf("\t put src:B dst:A \n");
+  printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
   xbrtime_ulonglong_put((unsigned long long *)(arr_B),
                         (unsigned long long *)(arr_A),
-                        1,
                         len,
+                        1,
                         1 ); 
-  /*
-  for(i=0; i < len; i++) {
-    xbrtime_ulonglong_put((unsigned long long *)(arr_B) + (i),
-                          (unsigned long long *)(arr_A) + (i),
-                          1,
-                          len,
-                          sz );
-  }
-  */
   // ======================================================  
   
   printf("A: \n");
@@ -146,21 +138,12 @@ int main(int argc, char **argv) {
   printf("\n");
 
   printf("TESTING GET...\n");
-  printf("\t get src:C dst:A \n");
-  xbrtime_ulonglong_get((unsigned long long *)(arr_B),
+  printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
+  xbrtime_ulonglong_get((unsigned long long *)(arr_C),
                         (unsigned long long *)(arr_A),
-                        1,
                         len,
+                        1,
                         1 ); 
-  /*
-  for(i=0; i < len; i++) {
-    xbrtime_ulonglong_get((unsigned long long *)(arr_C) + (i),
-                          (unsigned long long *)(arr_A) + (i),
-                          1,
-                          len,
-                          sz );
-  } 
-  */ 
   // ======================================================
   
   printf("A: \n");

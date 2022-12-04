@@ -63,4 +63,23 @@ __xbrtime_put_u8_seq:
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
 
+  #---------------------------------------------------
+
+  .global __xbrtime_asm_fence
+  .type __xbrtime_asm_fence, @function
+__xbrtime_asm_fence:
+  DSB
+  ISB
+  RET
+  .size __xbrtime_asm_fence, .-__xbrtime_asm_fence
+
+  #---------------------------------------------------
+
+  .global __xbrtime_asm_quiet_fence
+  .type __xbrtime_asm_quiet_fence, @function
+__xbrtime_asm_quiet_fence:
+  DMB
+  RET
+  .size __xbrtime_asm_quiet_fence, .-__xbrtime_asm_quiet_fence
+  
   #-- EOF
