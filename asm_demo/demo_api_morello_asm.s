@@ -36,10 +36,10 @@
 __xbrtime_get_u8_seq:
   MOV X15, XZR
 .get_u8_seq:
-  LDRD X14, [X0]
+  LDR X14, [X0]
   ADD X0, X0, X3
   ADD X15, X15, #1
-  STRD X14, [X1]
+  STR X14, [X1]
   ADD X1, X1, X3
   CMP X15, X2
   BNE .get_u8_seq
