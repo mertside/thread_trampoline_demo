@@ -34,14 +34,14 @@
   .global __xbrtime_get_u8_seq
   .type __xbrtime_get_u8_seq, @function
 __xbrtime_get_u8_seq:
-  MOV X15, XZR
+  MOV X12, XZR
 .get_u8_seq:
-  LDR X14, [X0]
+  LDRD X10, [X0]
   ADD X0, X0, X3
-  ADD X15, X15, #1
-  STR X14, [X1]
+  ADD X12, X12, #1
+  STRD X10, [X1]
   ADD X1, X1, X3
-  CMP X15, X2
+  CMP X12, X2
   BNE .get_u8_seq
   RET
   .size __xbrtime_get_u8_seq, .-__xbrtime_get_u8_seq
@@ -51,14 +51,14 @@ __xbrtime_get_u8_seq:
   .global __xbrtime_put_u8_seq
   .type __xbrtime_put_u8_seq, @function
 __xbrtime_put_u8_seq:
-  MOV X15, XZR
+  MOV X12, XZR
 .put_u8_seq:
-  LDR X14, [X0]
+  LDRD X10, [X0]
   ADD X0, X0, X3
-  ADD X15, X15, #1
-  STR X14, [X1]
+  ADD X12, X12, #1
+  STRD X10, [X1]
   ADD X1, X1, X3
-  CMP x15, X2
+  CMP x10, X2
   BNE .put_u8_seq
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
