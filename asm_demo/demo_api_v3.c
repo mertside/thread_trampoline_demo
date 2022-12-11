@@ -174,8 +174,8 @@ int main(int argc, char **argv) {
 
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
-  xbrtime_ulonglong_put((unsigned long long *)(arr_Y),
-                        (unsigned long long *)(arr_X),
+  xbrtime_ulonglong_put((unsigned long long *)(var_Y),
+                        (unsigned long long *)(var_X),
                         len,
                         1,
                         1 );
@@ -186,4 +186,4 @@ int main(int argc, char **argv) {
   printf("var_Y: %llu ", var_Y);
 
 }
-/* EOF */z
+/* EOF */
