@@ -165,7 +165,7 @@ int main(int argc, char **argv) {
   uint64_t *var_Y = NULL;
   var_X           = (uint64_t *)(malloc( sz ));
   var_Y           = (uint64_t *)(malloc( sz ));
-  var_X           = pow(2, 64) - 1;
+  var_X           = pow(2.0, 64.0) - 1;
   var_Y           = 0;
   printf("var_X: %llu ", var_X);
   printf("var_Y: %llu ", var_Y);
