@@ -392,12 +392,12 @@ void test_array_u4() {
   size_t     sz = 4;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint64_t *arr_A = NULL;
-  uint64_t *arr_B = NULL;
-  uint64_t *arr_C = NULL;
-  arr_A           = (uint64_t *)(malloc( len * sz ));
-  arr_B           = (uint64_t *)(malloc( len * sz )); 
-  arr_C           = (uint64_t *)(malloc( len * sz )); 
+  uint32_t *arr_A = NULL;
+  uint32_t *arr_B = NULL;
+  uint32_t *arr_C = NULL;
+  arr_A           = (uint32_t *)(malloc( len * sz ));
+  arr_B           = (uint32_t *)(malloc( len * sz )); 
+  arr_C           = (uint32_t *)(malloc( len * sz )); 
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
