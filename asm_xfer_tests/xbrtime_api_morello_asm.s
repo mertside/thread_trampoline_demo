@@ -60,7 +60,7 @@ __xbrtime_put_u1_seq:
   ADD X12, X12, #1
   STRB W10, [X1]
   ADD X1, X1, X3
-  CMP W10, X2
+  CMP W10, W2
   BNE .put_u1_seq
   RET
   .size __xbrtime_put_u1_seq, .-__xbrtime_put_u1_seq
@@ -94,7 +94,7 @@ __xbrtime_put_u2_seq:
   ADD X12, X12, #1
   STRH W10, [X1]
   ADD X1, X1, X3
-  CMP W10, X2
+  CMP W10, W2
   BNE .put_u2_seq
   RET
   .size __xbrtime_put_u2_seq, .-__xbrtime_put_u2_seq
@@ -128,7 +128,7 @@ __xbrtime_put_u4_seq:
   ADD X12, X12, #1
   STR W10, [X1]
   ADD X1, X1, X3
-  CMP W10, X2
+  CMP W10, W2
   BNE .put_u4_seq
   RET
   .size __xbrtime_put_u4_seq, .-__xbrtime_put_u4_seq
