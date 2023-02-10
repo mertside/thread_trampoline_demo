@@ -203,6 +203,7 @@ void print_array(uint64_t *array, size_t length) {
 void test_u1() {
   printf("\ntest_u1\n");
   size_t     sz = 1;
+  int       len = 1;
   // ...   ...   ...   ...   ...
   unsigned char *var_X  = NULL;
   unsigned char *var_Y  = NULL;
@@ -231,6 +232,7 @@ void test_u1() {
 void test_u2() {
   printf("\ntest_u2\n");
   size_t     sz = 2;
+  int       len = 1;
   // ...   ...   ...   ...   ...
   unsigned short *var_X  = NULL;
   unsigned short *var_Y  = NULL;
@@ -259,6 +261,7 @@ void test_u2() {
 void test_u4() {
   printf("\ntest_u4\n");
   size_t     sz = 4;
+  int       len = 1;
   // ...   ...   ...   ...   ...
   float *var_X  = NULL;
   float *var_Y  = NULL;
@@ -287,6 +290,7 @@ void test_u4() {
 void test_u8() {
   printf("\ntest_u8\n");
   size_t     sz = 8;
+  int       len = 1;
   // ...   ...   ...   ...   ...
   uint64_t *var_X  = NULL;
   uint64_t *var_Y  = NULL;
