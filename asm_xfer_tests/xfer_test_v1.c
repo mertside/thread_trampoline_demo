@@ -382,6 +382,7 @@ void print_array_u4(uint64_t *array, size_t length) {
   for (i = 0; i < length; i++) { 
     printf("%f ", array[i]); 
   }
+  printf("\n");
 }
 
 // ============================================================================
@@ -392,6 +393,7 @@ void print_array_u8(uint64_t *array, size_t length) {
   for (i = 0; i < length; i++) { 
     printf("%llu ", array[i]); 
   }
+  printf("\n");
 }
 
 // ============================================================================
@@ -419,13 +421,10 @@ void test_array_u4() {
  // ======================================================
   printf("A: \n");
   print_array_u4(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u4(arr_B, len);
-  printf("\n"); 
   printf("C: \n");
   print_array_u4(arr_C, len);
-  printf("\n"); 
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
@@ -437,13 +436,10 @@ void test_array_u4() {
   // ======================================================    
   printf("A: \n");
   print_array_u4(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u4(arr_B, len);
-  printf("\n");
   printf("C: \n");
   print_array_u4(arr_C, len);
-  printf("\n");
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
@@ -455,13 +451,10 @@ void test_array_u4() {
   // ======================================================
   printf("A: \n");
   print_array_u4(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u4(arr_B, len);
-  printf("\n");
   printf("C: \n");
   print_array_u4(arr_C, len);
-  printf("\n");
 }
 
 // ============================================================================
@@ -489,13 +482,10 @@ void test_array_u8() {
  // ======================================================
   printf("A: \n");
   print_array_u8(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u8(arr_B, len);
-  printf("\n"); 
   printf("C: \n");
   print_array_u8(arr_C, len);
-  printf("\n"); 
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
@@ -507,13 +497,10 @@ void test_array_u8() {
   // ======================================================    
   printf("A: \n");
   print_array_u8(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u8(arr_B, len);
-  printf("\n");
   printf("C: \n");
   print_array_u8(arr_C, len);
-  printf("\n");
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
@@ -525,13 +512,10 @@ void test_array_u8() {
   // ======================================================
   printf("A: \n");
   print_array_u8(arr_A, len);
-  printf("\n");
   printf("B: \n");
   print_array_u8(arr_B, len);
-  printf("\n");
   printf("C: \n");
   print_array_u8(arr_C, len);
-  printf("\n");
 }
 
 // ============================================================================
