@@ -319,17 +319,17 @@ void test_u8() {
 // ============================================================================
 
 // ------------------------------------------------- TEST ARRAY UNSIGNED 4 BYTE
-void test_array_u4() {
+void test_array_u8() {
   printf("\ntest_array_u4\n");
-  size_t     sz = 4;
+  size_t     sz = _ALLOC_SIZE_;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  float *arr_A = NULL;
-  float *arr_B = NULL;
-  float *arr_C = NULL;
-  arr_A           = (float *)(malloc( len * sz ));
-  arr_B           = (float *)(malloc( len * sz )); 
-  arr_C           = (float *)(malloc( len * sz )); 
+  uint64_t *arr_A = NULL;
+  uint64_t *arr_B = NULL;
+  uint64_t *arr_C = NULL;
+  arr_A           = (uint64_t *)(malloc( len * sz ));
+  arr_B           = (uint64_t *)(malloc( len * sz )); 
+  arr_C           = (uint64_t *)(malloc( len * sz )); 
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
@@ -351,11 +351,11 @@ void test_array_u4() {
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_put((float *)(arr_B),
-                    (float *)(arr_A),
-                    len,
-                    1,
-                    1 ); 
+  xbrtime_ulonglong_put((unsigned long long *)(arr_B),
+                        (unsigned long long *)(arr_A),
+                        len,
+                        1,
+                        1 ); 
   // ======================================================    
   printf("A: \n");
   print_array(arr_A, len);
@@ -369,11 +369,11 @@ void test_array_u4() {
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_get((float *)(arr_C),
-                    (float *)(arr_A),
-                    len,
-                    1,
-                    1 ); 
+  xbrtime_ulonglong_get((unsigned long long *)(arr_C),
+                        (unsigned long long *)(arr_A),
+                        len,
+                        1,
+                        1 ); 
   // ======================================================
   printf("A: \n");
   print_array(arr_A, len);
@@ -412,7 +412,7 @@ int main(int argc, char **argv) {
     test_u4();
   } else if(modeSelection == 8) {
     test_u8();
-  } else if(modeSelection == 14) {
+  } else if(modeSelection == 18) {
     test_array_u4();
   } else {
     printf("\nEnter one of the following arguments\n");
@@ -420,7 +420,7 @@ int main(int argc, char **argv) {
     printf("  2: test_u2()\n");
     printf("  4: test_u4()\n");
     printf("  8: test_u8()\n");
-    printf(" 14: test_array_u4()\n");
+    printf(" 18: test_array_u8()\n");
   }
 
 
