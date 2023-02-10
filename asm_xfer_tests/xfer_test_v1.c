@@ -189,16 +189,6 @@ void xbrtime_ulonglong_put(unsigned long long *dest,
 
 // ============================================================================
 
-// --------------------------------------------------------------- PRINT ARRAY
-void print_array(uint64_t *array, size_t length) {
-  int i = 0;
-  for (i = 0; i < length; i++) { 
-    printf("%llu ", array[i]); 
-  }
-}
-
-// ============================================================================
-
 // ------------------------------------------------------- TEST UNSIGNED 1 BYTE
 void test_u1() {
   printf("\ntest_u1\n");
@@ -318,9 +308,89 @@ void test_u8() {
 
 // ============================================================================
 
+// --------------------------------------------------------------- PRINT ARRAY
+void print_array(uint64_t *array, size_t length) {
+  int i = 0;
+  for (i = 0; i < length; i++) { 
+    printf("%llu ", array[i]); 
+  }
+}
+
+// ============================================================================
+
 // ------------------------------------------------- TEST ARRAY UNSIGNED 4 BYTE
-void test_array_u8() {
+void test_array_u4() {
   printf("\ntest_array_u4\n");
+  size_t     sz = 4;
+  int       len = 8;
+  // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
+  uint64_t *arr_A = NULL;
+  uint64_t *arr_B = NULL;
+  uint64_t *arr_C = NULL;
+  arr_A           = (uint64_t *)(malloc( len * sz ));
+  arr_B           = (uint64_t *)(malloc( len * sz )); 
+  arr_C           = (uint64_t *)(malloc( len * sz )); 
+  // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
+  int num       = 0; 
+  for(int i=0; i < len; i++) {
+    num        += 2;
+    arr_A[i]    = num;
+    arr_B[i]    = 0;
+    arr_C[i]    = 1;
+  }
+ // ======================================================
+  printf("A: \n");
+  print_array(arr_A, len);
+  printf("\n");
+  printf("B: \n");
+  print_array(arr_B, len);
+  printf("\n"); 
+  printf("C: \n");
+  print_array(arr_C, len);
+  printf("\n"); 
+  // ======================================================
+  printf("\nTESTING PUT...\n");
+  printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
+  xbrtime_float_put((unsigned long *)(arr_B),
+                    (unsigned long *)(arr_A),
+                    len,
+                    1,
+                    1 ); 
+  // ======================================================    
+  printf("A: \n");
+  print_array(arr_A, len);
+  printf("\n");
+  printf("B: \n");
+  print_array(arr_B, len);
+  printf("\n");
+  printf("C: \n");
+  print_array(arr_C, len);
+  printf("\n");
+ // ======================================================
+  printf("\nTESTING GET...\n");
+  printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
+  xbrtime_float_get((unsigned long *)(arr_C),
+                    (unsigned long *)(arr_A),
+                    len,
+                    1,
+                    1 ); 
+  // ======================================================
+  printf("A: \n");
+  print_array(arr_A, len);
+  printf("\n");
+  printf("B: \n");
+  print_array(arr_B, len);
+  printf("\n");
+  printf("C: \n");
+  print_array(arr_C, len);
+  printf("\n");
+}
+
+// ============================================================================
+
+// ------------------------------------------------- TEST ARRAY UNSIGNED 8 BYTE
+void test_array_u8() {
+  printf("\ntest_array_u8\n");
   size_t     sz = _ALLOC_SIZE_;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
