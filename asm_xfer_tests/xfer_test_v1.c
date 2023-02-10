@@ -376,8 +376,18 @@ void test_u8() {
 
 // ============================================================================
 
-// --------------------------------------------------------------- PRINT ARRAY
-void print_array(uint64_t *array, size_t length) {
+// ------------------------------------------------------------- PRINT ARRAY U4
+void print_array_u4(uint64_t *array, size_t length) {
+  int i = 0;
+  for (i = 0; i < length; i++) { 
+    printf("%f ", array[i]); 
+  }
+}
+
+// ============================================================================
+
+// ------------------------------------------------------------- PRINT ARRAY U8
+void print_array_u8(uint64_t *array, size_t length) {
   int i = 0;
   for (i = 0; i < length; i++) { 
     printf("%llu ", array[i]); 
@@ -392,12 +402,12 @@ void test_array_u4() {
   size_t     sz = 4;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint32_t *arr_A = NULL;
-  uint32_t *arr_B = NULL;
-  uint32_t *arr_C = NULL;
-  arr_A           = (uint32_t *)(malloc( len * sz ));
-  arr_B           = (uint32_t *)(malloc( len * sz )); 
-  arr_C           = (uint32_t *)(malloc( len * sz )); 
+  uint64_t *arr_A = NULL;
+  uint64_t *arr_B = NULL;
+  uint64_t *arr_C = NULL;
+  arr_A           = (uint64_t *)(malloc( len * sz ));
+  arr_B           = (uint64_t *)(malloc( len * sz )); 
+  arr_C           = (uint64_t *)(malloc( len * sz )); 
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
@@ -408,13 +418,13 @@ void test_array_u4() {
   }
  // ======================================================
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u4(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u4(arr_B, len);
   printf("\n"); 
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u4(arr_C, len);
   printf("\n"); 
   // ======================================================
   printf("\nTESTING PUT...\n");
@@ -426,13 +436,13 @@ void test_array_u4() {
                     1 ); 
   // ======================================================    
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u4(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u4(arr_B, len);
   printf("\n");
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u4(arr_C, len);
   printf("\n");
  // ======================================================
   printf("\nTESTING GET...\n");
@@ -444,13 +454,13 @@ void test_array_u4() {
                     1 ); 
   // ======================================================
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u4(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u4(arr_B, len);
   printf("\n");
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u4(arr_C, len);
   printf("\n");
 }
 
@@ -478,13 +488,13 @@ void test_array_u8() {
   }
  // ======================================================
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u8(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u8(arr_B, len);
   printf("\n"); 
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u8(arr_C, len);
   printf("\n"); 
   // ======================================================
   printf("\nTESTING PUT...\n");
@@ -496,13 +506,13 @@ void test_array_u8() {
                         1 ); 
   // ======================================================    
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u8(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u8(arr_B, len);
   printf("\n");
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u8(arr_C, len);
   printf("\n");
  // ======================================================
   printf("\nTESTING GET...\n");
@@ -514,13 +524,13 @@ void test_array_u8() {
                         1 ); 
   // ======================================================
   printf("A: \n");
-  print_array(arr_A, len);
+  print_array_u8(arr_A, len);
   printf("\n");
   printf("B: \n");
-  print_array(arr_B, len);
+  print_array_u8(arr_B, len);
   printf("\n");
   printf("C: \n");
-  print_array(arr_C, len);
+  print_array_u8(arr_C, len);
   printf("\n");
 }
 
