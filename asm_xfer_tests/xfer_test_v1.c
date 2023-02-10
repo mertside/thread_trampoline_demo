@@ -413,7 +413,7 @@ int main(int argc, char **argv) {
   } else if(modeSelection == 8) {
     test_u8();
   } else if(modeSelection == 18) {
-    test_array_u4();
+    test_array_u8();
   } else {
     printf("\nEnter one of the following arguments\n");
     printf("  1: test_u1()\n");
