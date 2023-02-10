@@ -58,7 +58,7 @@ __xbrtime_put_u8_seq:
   ADD X12, X12, #1
   STR X10, [X1]
   ADD X1, X1, X3
-  CMP x10, X2
+  CMP X10, X2
   BNE .put_u8_seq
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq

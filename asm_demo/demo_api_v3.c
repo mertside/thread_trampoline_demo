@@ -62,7 +62,7 @@ void xbrtime_ulonglong_put(unsigned long long *dest,
                          (uint32_t)(nelems),
                          (uint32_t)(stride*sizeof(unsigned long long)));
   }
-  __xbrtime_asm_fence();
+  //__xbrtime_asm_fence();
 }
 
 // --------------------------------------------------------------- PRINT ARRAY
@@ -161,14 +161,17 @@ int main(int argc, char **argv) {
   // ======================================================
   // ======================================================  
 
-  uint64_t *var_X = NULL;
-  uint64_t *var_Y = NULL;
-  var_X           = (uint64_t *)(malloc( sz ));
-  var_Y           = (uint64_t *)(malloc( sz ));
-  var_X           = 18446744073709551615;
-  var_Y           = 0;
-  printf("var_X: %llu ", var_X);
-  printf("var_Y: %llu ", var_Y);
+  uint64_t *var_X  = NULL;
+  uint64_t *var_Y  = NULL;
+  var_X            = (uint64_t *)(malloc( sz ));
+  var_Y            = (uint64_t *)(malloc( sz ));
+  *var_X           = 18446744073709551615; 
+                  // 9223372036854775807;
+  *var_Y           = 0;
+
+  printf("\n");
+  printf("var_X: %llu \n", *var_X);
+  printf("var_Y: %llu \n", *var_Y);
   
   // ======================================================
 
@@ -182,8 +185,8 @@ int main(int argc, char **argv) {
 
   // ======================================================
 
-  printf("var_X: %llu ", var_X);
-  printf("var_Y: %llu ", var_Y);
+  printf("var_X: %llu \n", *var_X);
+  printf("var_Y: %llu \n", *var_Y);
 
 }
 /* EOF */
