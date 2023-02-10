@@ -197,14 +197,18 @@ void test_u1() {
   // ...   ...   ...   ...   ...
   unsigned char *var_X  = NULL;
   unsigned char *var_Y  = NULL;
+  unsigned char *var_Z  = NULL;
   var_X            = (unsigned char *)(malloc( sz ));
   var_Y            = (unsigned char *)(malloc( sz ));
+  var_Z            = (unsigned char *)(malloc( sz ));
   *var_X           = 255; 
   *var_Y           = 0;
+  *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   printf("\n");
   printf("var_X: %u \n", *var_X);
   printf("var_Y: %u \n", *var_Y);
+  printf("var_Z: %u \n", *var_Z);
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
@@ -216,6 +220,19 @@ void test_u1() {
   // ======================================================
   printf("var_X: %u \n", *var_X);
   printf("var_Y: %u \n", *var_Y);
+  printf("var_Z: %u \n", *var_Z);
+  // ======================================================
+  printf("\nTESTING GET...\n");
+  printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
+  xbrtime_uchar_get((unsigned char *)(var_Z),
+                    (unsigned char *)(var_X),
+                    len,
+                    1,
+                    1 ); 
+  // ======================================================
+  printf("var_X: %u \n", *var_X);
+  printf("var_Y: %u \n", *var_Y);
+  printf("var_Z: %u \n", *var_Z);
 }
 
 // ------------------------------------------------------- TEST UNSIGNED 2 BYTE
@@ -226,14 +243,18 @@ void test_u2() {
   // ...   ...   ...   ...   ...
   unsigned short *var_X  = NULL;
   unsigned short *var_Y  = NULL;
+  unsigned short *var_Z  = NULL;
   var_X            = (unsigned short *)(malloc( sz ));
   var_Y            = (unsigned short *)(malloc( sz ));
+  var_Z            = (unsigned short *)(malloc( sz ));
   *var_X           = 65535; 
   *var_Y           = 0;
+  *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   printf("\n");
   printf("var_X: %hu \n", *var_X);
   printf("var_Y: %hu \n", *var_Y);
+  printf("var_Z: %hu \n", *var_Z);
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
@@ -245,6 +266,19 @@ void test_u2() {
   // ======================================================
   printf("var_X: %hu \n", *var_X);
   printf("var_Y: %hu \n", *var_Y);
+  printf("var_Z: %hu \n", *var_Z);
+  // ======================================================
+  printf("\nTESTING GET...\n");
+  printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
+  xbrtime_ushort_get((unsigned short *)(var_Z),
+                     (unsigned short *)(var_X),
+                     len,
+                     1,
+                     1 ); 
+  // ======================================================
+  printf("var_X: %hu \n", *var_X);
+  printf("var_Y: %hu \n", *var_Y);
+  printf("var_Z: %hu \n", *var_Z);
 }
 
 // ------------------------------------------------------- TEST UNSIGNED 4 BYTE
@@ -255,14 +289,18 @@ void test_u4() {
   // ...   ...   ...   ...   ...
   float *var_X  = NULL;
   float *var_Y  = NULL;
+  float *var_Z  = NULL;
   var_X            = (float *)(malloc( sz ));
   var_Y            = (float *)(malloc( sz ));
+  var_Z            = (float *)(malloc( sz ));
   *var_X           = 4294967295; 
   *var_Y           = 0;
+  *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   printf("\n");
   printf("var_X: %f \n", *var_X);
   printf("var_Y: %f \n", *var_Y);
+  printf("var_Z: %f \n", *var_Z);
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
@@ -274,6 +312,19 @@ void test_u4() {
   // ======================================================
   printf("var_X: %f \n", *var_X);
   printf("var_Y: %f \n", *var_Y);
+  printf("var_Z: %f \n", *var_Z);
+  // ======================================================
+  printf("\nTESTING GET...\n");
+  printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
+  xbrtime_float_get((float *)(var_Z),
+                    (float *)(var_X),
+                    len,
+                    1,
+                    1 ); 
+  // ======================================================
+  printf("var_X: %f \n", *var_X);
+  printf("var_Y: %f \n", *var_Y);
+  printf("var_Z: %f \n", *var_Z);
 }
 
 // ------------------------------------------------------- TEST UNSIGNED 8 BYTE
@@ -284,15 +335,19 @@ void test_u8() {
   // ...   ...   ...   ...   ...
   uint64_t *var_X  = NULL;
   uint64_t *var_Y  = NULL;
+  uint64_t *var_Z  = NULL;
   var_X            = (uint64_t *)(malloc( sz ));
   var_Y            = (uint64_t *)(malloc( sz ));
+  var_Z            = (uint64_t *)(malloc( sz ));
   *var_X           = 18446744073709551615; 
                   // 9223372036854775807;
   *var_Y           = 0;
+  *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   printf("\n");
   printf("var_X: %llu \n", *var_X);
   printf("var_Y: %llu \n", *var_Y);
+  printf("var_Z: %llu \n", *var_Z);
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
@@ -304,6 +359,19 @@ void test_u8() {
   // ======================================================
   printf("var_X: %llu \n", *var_X);
   printf("var_Y: %llu \n", *var_Y);
+  printf("var_Z: %llu \n", *var_Z);
+  // ======================================================
+  printf("\nTESTING GET...\n");
+  printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
+  xbrtime_ulonglong_get((unsigned long long *)(var_Z),
+                        (unsigned long long *)(var_X),
+                        len,
+                        1,
+                        1 ); 
+  // ======================================================
+  printf("var_X: %llu \n", *var_X);
+  printf("var_Y: %llu \n", *var_Y);
+  printf("var_Z: %llu \n", *var_Z);
 }
 
 // ============================================================================
@@ -482,6 +550,8 @@ int main(int argc, char **argv) {
     test_u4();
   } else if(modeSelection == 8) {
     test_u8();
+  } else if(modeSelection == 14) {
+    test_array_u4();
   } else if(modeSelection == 18) {
     test_array_u8();
   } else {
@@ -490,6 +560,7 @@ int main(int argc, char **argv) {
     printf("  2: test_u2()\n");
     printf("  4: test_u4()\n");
     printf("  8: test_u8()\n");
+    printf(" 14: test_array_u4()\n");
     printf(" 18: test_array_u8()\n");
   }
 
