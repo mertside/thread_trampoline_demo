@@ -49,7 +49,7 @@ __asm__ __volatile__ ( "...;"
   ret
 */
 
-// ============================================================================
+// ====================================================================================================================
 
 // ----------------------------------------------------------- U1 GET FUNCTION
 void xbrtime_uchar_get(unsigned char *dest, const unsigned char *src,
@@ -187,7 +187,7 @@ void xbrtime_ulonglong_put(unsigned long long *dest,
   //__xbrtime_asm_fence();
 }
 
-// ============================================================================
+// ====================================================================================================================
 
 // ------------------------------------------------------- TEST UNSIGNED 1 BYTE
 void test_u1() {
@@ -373,10 +373,10 @@ void test_u8() {
   printf("var_Z: %llu \n", *var_Z);
 }
 
-// ============================================================================
+// ====================================================================================================================
 
 // ------------------------------------------------------------- PRINT ARRAY U1
-void print_array_u1(uint8_t *array, size_t length) {
+void print_array_u1(unsigned char *array, size_t length) {
   int i = 0;
   for (i = 0; i < length; i++) { 
     printf("%u ", array[i]); 
@@ -386,51 +386,14 @@ void print_array_u1(uint8_t *array, size_t length) {
 
 // ============================================================================
 
-// ------------------------------------------------------------- PRINT ARRAY U2
-void print_array_u2(uint16_t *array, size_t length) {
-  int i = 0;
-  for (i = 0; i < length; i++) { 
-    printf("%hu ", array[i]); 
-  }
-  printf("\n");
-}
-
-// ============================================================================
-
-// ------------------------------------------------------------- PRINT ARRAY U4
-void print_array_u4(uint32_t *array, size_t length) {
-  int i = 0;
-  for (i = 0; i < length; i++) { 
-    printf("%lu ", array[i]); 
-  }
-  printf("\n");
-}
-
-// ============================================================================
-
-// ------------------------------------------------------------- PRINT ARRAY U8
-void print_array_u8(uint64_t *array, size_t length) {
-  int i = 0;
-  for (i = 0; i < length; i++) { 
-    printf("%llu ", array[i]); 
-  }
-  printf("\n");
-}
-
-// ============================================================================
-
 // ------------------------------------------------- TEST ARRAY UNSIGNED 1 BYTE
 void test_array_u1() {
   printf("\ntest_array_u1\n");
-  size_t     sz = 1;
-  int       len = 8;
+  size_t len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint8_t *arr_A = NULL;
-  uint8_t *arr_B = NULL;
-  uint8_t *arr_C = NULL;
-  arr_A           = (uint8_t *)(malloc( len * sz ));
-  arr_B           = (uint8_t *)(malloc( len * sz )); 
-  arr_C           = (uint8_t *)(malloc( len * sz )); 
+  unsigned char *arr_A = malloc( len * sizeof(unsigned char) );
+  unsigned char *arr_B = malloc( len * sizeof(unsigned char) );
+  unsigned char *arr_C = malloc( len * sizeof(unsigned char) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
@@ -449,8 +412,8 @@ void test_array_u1() {
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_uchar_put((unsigned long *)(arr_B),
-                    (unsigned long *)(arr_A),
+  xbrtime_uchar_put((unsigned char *)(arr_B),
+                    (unsigned char *)(arr_A),
                     len,
                     1,
                     1 ); 
@@ -464,8 +427,8 @@ void test_array_u1() {
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_uchar_get((unsigned long *)(arr_C),
-                    (unsigned long *)(arr_A),
+  xbrtime_uchar_get((unsigned char *)(arr_C),
+                    (unsigned char *)(arr_A),
                     len,
                     1,
                     1 ); 
@@ -480,18 +443,25 @@ void test_array_u1() {
 
 // ============================================================================
 
+// ------------------------------------------------------------- PRINT ARRAY U2
+void print_array_u2(unsigned short *array, size_t length) {
+  int i = 0;
+  for (i = 0; i < (int) length; i++) { 
+    printf("%hu ", array[i]); 
+  }
+  printf("\n");
+}
+
+// ============================================================================
+
 // ------------------------------------------------- TEST ARRAY UNSIGNED 2 BYTE
 void test_array_u2() {
   printf("\ntest_array_u2\n");
-  size_t     sz = 2;
-  int       len = 8;
+  size_t len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint16_t *arr_A = NULL;
-  uint16_t *arr_B = NULL;
-  uint16_t *arr_C = NULL;
-  arr_A           = (uint16_t *)(malloc( len * sz ));
-  arr_B           = (uint16_t *)(malloc( len * sz )); 
-  arr_C           = (uint16_t *)(malloc( len * sz )); 
+  unsigned short *arr_A = malloc( len * sizeof(unsigned short) );
+  unsigned short *arr_B = malloc( len * sizeof(unsigned short) );
+  unsigned short *arr_C = malloc( len * sizeof(unsigned short) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
@@ -541,11 +511,21 @@ void test_array_u2() {
 
 // ============================================================================
 
+// ------------------------------------------------------------- PRINT ARRAY U4
+void print_array_u4(unsigned long *array, size_t length) {
+  int i = 0;
+  for (i = 0; i < (int) length; i++) { 
+    printf("%lu ", array[i]); 
+  }
+  printf("\n");
+}
+
+// ============================================================================
+
 // ------------------------------------------------- TEST ARRAY UNSIGNED 4 BYTE
 void test_array_u4() {
   printf("\ntest_array_u4\n");
-  // size_t     sz = 4;
-  int       len = 8;
+  size_t len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   unsigned long *arr_A = malloc( len * sizeof(unsigned long) );
   unsigned long *arr_B = malloc( len * sizeof(unsigned long) );
@@ -599,15 +579,25 @@ void test_array_u4() {
 
 // ============================================================================
 
+// ------------------------------------------------------------- PRINT ARRAY U8
+void print_array_u8(unsigned long long *array, size_t length) {
+  int i = 0;
+  for (i = 0; i < (int) length; i++) { 
+    printf("%llu ", array[i]); 
+  }
+  printf("\n");
+}
+
+// ============================================================================
+
 // ------------------------------------------------- TEST ARRAY UNSIGNED 8 BYTE
 void test_array_u8() {
   printf("\ntest_array_u8\n");
-  // size_t     sz = _ALLOC_SIZE_;
-  int       len = 8;
+  size_t len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint64_t *arr_A = malloc( len * sizeof(uint64_t) );
-  uint64_t *arr_B = malloc( len * sizeof(uint64_t) );
-  uint64_t *arr_C = malloc( len * sizeof(uint64_t) );
+  unsigned long long *arr_A = malloc( len * sizeof(unsigned long long) );
+  unsigned long long *arr_B = malloc( len * sizeof(unsigned long long) );
+  unsigned long long *arr_C = malloc( len * sizeof(unsigned long long) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
@@ -655,7 +645,7 @@ void test_array_u8() {
   print_array_u8(arr_C, len);
 }
 
-// ============================================================================
+// ====================================================================================================================
 
 // ------------------------------------------------------------- MAIN FUNCTION
 int main(int argc, char **argv) {
