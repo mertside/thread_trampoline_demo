@@ -544,15 +544,12 @@ void test_array_u2() {
 // ------------------------------------------------- TEST ARRAY UNSIGNED 4 BYTE
 void test_array_u4() {
   printf("\ntest_array_u4\n");
-  size_t     sz = 4;
+  // size_t     sz = 4;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint32_t *arr_A = NULL;
-  uint32_t *arr_B = NULL;
-  uint32_t *arr_C = NULL;
-  arr_A           = (uint32_t *)(malloc( len * sz ));
-  arr_B           = (uint32_t *)(malloc( len * sz )); 
-  arr_C           = (uint32_t *)(malloc( len * sz )); 
+  uint32_t *arr_A = malloc( len * sizeof(uint32_t) );
+  uint32_t *arr_B = malloc( len * sizeof(uint32_t) );
+  uint32_t *arr_C = malloc( len * sizeof(uint32_t) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
