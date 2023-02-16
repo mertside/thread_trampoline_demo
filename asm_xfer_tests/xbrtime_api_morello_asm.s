@@ -65,6 +65,40 @@ __xbrtime_put_u1_seq:
   RET
   .size __xbrtime_put_u1_seq, .-__xbrtime_put_u1_seq
 
+  #--------------------------------------------------------------------- S1 SEQ
+
+  .global __xbrtime_get_s1_seq
+  .type __xbrtime_get_s1_seq, @function
+__xbrtime_get_s1_seq:
+  MOV X12, XZR
+.get_s1_seq:
+  LDRB W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STRB W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .get_s1_seq
+  RET
+  .size __xbrtime_get_s1_seq, .-__xbrtime_get_s1_seq
+
+  #---------------------------------------------------
+
+  .global __xbrtime_put_s1_seq
+  .type __xbrtime_put_s1_seq, @function
+__xbrtime_put_s1_seq:
+  MOV X12, XZR
+.put_s1_seq:
+  LDRB W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STRB W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .put_s1_seq
+  RET
+  .size __xbrtime_put_s1_seq, .-__xbrtime_put_s1_seq
+
   #--------------------------------------------------------------------- U2 SEQ
 
   .global __xbrtime_get_u2_seq
@@ -98,6 +132,40 @@ __xbrtime_put_u2_seq:
   BNE .put_u2_seq
   RET
   .size __xbrtime_put_u2_seq, .-__xbrtime_put_u2_seq
+
+  #--------------------------------------------------------------------- S2 SEQ
+
+  .global __xbrtime_get_s2_seq
+  .type __xbrtime_get_s2_seq, @function
+__xbrtime_get_s2_seq:
+  MOV X12, XZR
+.get_s2_seq:
+  LDRH W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STRH W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .get_s2_seq
+  RET
+  .size __xbrtime_get_s2_seq, .-__xbrtime_get_s2_seq
+
+  #---------------------------------------------------
+
+  .global __xbrtime_put_s2_seq
+  .type __xbrtime_put_s2_seq, @function
+__xbrtime_put_s2_seq:
+  MOV X12, XZR
+.put_s2_seq:
+  LDRH W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STRH W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .put_s2_seq
+  RET
+  .size __xbrtime_put_s2_seq, .-__xbrtime_put_s2_seq
 
   #--------------------------------------------------------------------- U4 SEQ
 
@@ -133,6 +201,40 @@ __xbrtime_put_u4_seq:
   RET
   .size __xbrtime_put_u4_seq, .-__xbrtime_put_u4_seq
 
+  #--------------------------------------------------------------------- S4 SEQ
+
+  .global __xbrtime_get_s4_seq
+  .type __xbrtime_get_s4_seq, @function
+__xbrtime_get_s4_seq:
+  MOV X12, XZR
+.get_s4_seq:
+  LDR W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STR W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .get_s4_seq
+  RET
+  .size __xbrtime_get_s4_seq, .-__xbrtime_get_s4_seq
+
+  #---------------------------------------------------
+
+  .global __xbrtime_put_s4_seq
+  .type __xbrtime_put_s4_seq, @function
+__xbrtime_put_s4_seq:
+  MOV X12, XZR
+.put_s4_seq:
+  LDR W10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STR W10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .put_s4_seq
+  RET
+  .size __xbrtime_put_s4_seq, .-__xbrtime_put_s4_seq
+
   #--------------------------------------------------------------------- U8 SEQ
 
   .global __xbrtime_get_u8_seq
@@ -166,6 +268,40 @@ __xbrtime_put_u8_seq:
   BNE .put_u8_seq
   RET
   .size __xbrtime_put_u8_seq, .-__xbrtime_put_u8_seq
+
+  #--------------------------------------------------------------------- S8 SEQ
+
+  .global __xbrtime_get_s8_seq
+  .type __xbrtime_get_s8_seq, @function
+__xbrtime_get_s8_seq:
+  MOV X12, XZR
+.get_s8_seq:
+  LDR X10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STR X10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .get_s8_seq
+  RET
+  .size __xbrtime_get_s8_seq, .-__xbrtime_get_s8_seq
+
+  #---------------------------------------------------
+
+  .global __xbrtime_put_s8_seq
+  .type __xbrtime_put_s8_seq, @function
+__xbrtime_put_s8_seq:
+  MOV X12, XZR
+.put_s8_seq:
+  LDR X10, [X0]
+  ADD X0, X0, X3
+  ADD X12, X12, #1
+  STR X10, [X1]
+  ADD X1, X1, X3
+  CMP X12, X2
+  BNE .put_s8_seq
+  RET
+  .size __xbrtime_put_s8_seq, .-__xbrtime_put_s8_seq
 
   #---------------------------------------------------------------------- FENCE
   
