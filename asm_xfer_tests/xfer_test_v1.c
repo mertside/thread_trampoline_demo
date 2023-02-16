@@ -120,7 +120,7 @@ void xbrtime_ushort_put(unsigned short *dest, const unsigned short *src,
 // ============================================================================
 
 // ----------------------------------------------------------- U4 GET FUNCTION
-void xbrtime_float_get(float *dest, const float *src,
+void xbrtime_ulong_get(unsigned long *dest, const unsigned long *src,
                      size_t nelems, int stride, int pe){
   if(nelems == 0){
     return;
@@ -130,13 +130,13 @@ void xbrtime_float_get(float *dest, const float *src,
                          (uint64_t)(dest),
                          //xbrtime_decode_pe(pe),
                          (uint32_t)(nelems),
-                         (uint32_t)(stride*sizeof(float)));
+                         (uint32_t)(stride*sizeof(unsigned long)));
   }
   //__xbrtime_asm_fence();
 }
 
 // ----------------------------------------------------------- U4 PUT FUNCTION
-void xbrtime_float_put(float *dest, const float *src,
+void xbrtime_ulong_put(unsigned long *dest, const unsigned long *src,
                      size_t nelems, int stride, int pe){
   if(nelems == 0){
     return;
@@ -146,7 +146,7 @@ void xbrtime_float_put(float *dest, const float *src,
                          dest,//__xbrtime_ltor((uint64_t)(dest),pe),
                          //xbrtime_decode_pe(pe),
                          (uint32_t)(nelems),
-                         (uint32_t)(stride*sizeof(float)));
+                         (uint32_t)(stride*sizeof(unsigned long)));
   }
   //__xbrtime_asm_fence();
 }
@@ -287,12 +287,12 @@ void test_u4() {
   size_t     sz = 4;
   int       len = 1;
   // ...   ...   ...   ...   ...
-  float *var_X  = NULL;
-  float *var_Y  = NULL;
-  float *var_Z  = NULL;
-  var_X            = (float *)(malloc( sz ));
-  var_Y            = (float *)(malloc( sz ));
-  var_Z            = (float *)(malloc( sz ));
+  unsigned long *var_X  = NULL;
+  unsigned long *var_Y  = NULL;
+  unsigned long *var_Z  = NULL;
+  var_X            = (unsigned long *)(malloc( sz ));
+  var_Y            = (unsigned long *)(malloc( sz ));
+  var_Z            = (unsigned long *)(malloc( sz ));
   *var_X           = 4294967295; 
   *var_Y           = 0;
   *var_Z           = 1;
@@ -304,8 +304,8 @@ void test_u4() {
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_put((float *)(var_Y),
-                    (float *)(var_X),
+  xbrtime_ulong_put((unsigned long *)(var_Y),
+                    (unsigned long *)(var_X),
                     len,
                     1,
                     1 );
@@ -316,8 +316,8 @@ void test_u4() {
   // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_get((float *)(var_Z),
-                    (float *)(var_X),
+  xbrtime_ulong_get((unsigned long *)(var_Z),
+                    (unsigned long *)(var_X),
                     len,
                     1,
                     1 ); 
@@ -568,7 +568,7 @@ void test_array_u4() {
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_put((unsigned long *)(arr_B),
+  xbrtime_ulong_put((unsigned long *)(arr_B),
                     (unsigned long *)(arr_A),
                     len,
                     1,
@@ -583,7 +583,7 @@ void test_array_u4() {
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_float_get((unsigned long *)(arr_C),
+  xbrtime_ulong_get((unsigned long *)(arr_C),
                     (unsigned long *)(arr_A),
                     len,
                     1,
