@@ -687,6 +687,10 @@ int main(int argc, char **argv) {
     test_u4();
   } else if(modeSelection == 8) {
     test_u8();
+  } else if(modeSelection == 11) {
+    test_array_u1();
+  } else if(modeSelection == 12) {
+    test_array_u2();
   } else if(modeSelection == 14) {
     test_array_u4();
   } else if(modeSelection == 18) {
@@ -697,6 +701,8 @@ int main(int argc, char **argv) {
     printf("  2: test_u2()\n");
     printf("  4: test_u4()\n");
     printf("  8: test_u8()\n");
+    printf(" 11: test_array_u1()\n");
+    printf(" 12: test_array_u2()\n");
     printf(" 14: test_array_u4()\n");
     printf(" 18: test_array_u8()\n");
   }
