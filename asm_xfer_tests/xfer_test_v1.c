@@ -9,8 +9,6 @@
 #include <math.h>
 #include <inttypes.h>
 
-#define _ALLOC_SIZE_ 8
-
 // ============================================================================
 
 // ------------------------------------------------------- FUNCTION PROTOTYPES
@@ -192,15 +190,11 @@ void xbrtime_ulonglong_put(unsigned long long *dest,
 // ------------------------------------------------------- TEST UNSIGNED 1 BYTE
 void test_u1() {
   printf("\ntest_u1\n");
-  size_t     sz = 1;
-  int       len = 1;
+  size_t len = 1;
   // ...   ...   ...   ...   ...
-  unsigned char *var_X  = NULL;
-  unsigned char *var_Y  = NULL;
-  unsigned char *var_Z  = NULL;
-  var_X            = (unsigned char *)(malloc( sz ));
-  var_Y            = (unsigned char *)(malloc( sz ));
-  var_Z            = (unsigned char *)(malloc( sz ));
+  unsigned char *var_X  = malloc( sizeof(unsigned char) );
+  unsigned char *var_Y  = malloc( sizeof(unsigned char) );
+  unsigned char *var_Z  = malloc( sizeof(unsigned char) );
   *var_X           = 255; 
   *var_Y           = 0;
   *var_Z           = 1;
@@ -238,15 +232,11 @@ void test_u1() {
 // ------------------------------------------------------- TEST UNSIGNED 2 BYTE
 void test_u2() {
   printf("\ntest_u2\n");
-  size_t     sz = 2;
-  int       len = 1;
+  size_t len = 1;
   // ...   ...   ...   ...   ...
-  unsigned short *var_X  = NULL;
-  unsigned short *var_Y  = NULL;
-  unsigned short *var_Z  = NULL;
-  var_X            = (unsigned short *)(malloc( sz ));
-  var_Y            = (unsigned short *)(malloc( sz ));
-  var_Z            = (unsigned short *)(malloc( sz ));
+  unsigned short *var_X  = malloc( sizeof(unsigned short) );
+  unsigned short *var_Y  = malloc( sizeof(unsigned short) );
+  unsigned short *var_Z  = malloc( sizeof(unsigned short) );
   *var_X           = 65535; 
   *var_Y           = 0;
   *var_Z           = 1;
@@ -284,15 +274,11 @@ void test_u2() {
 // ------------------------------------------------------- TEST UNSIGNED 4 BYTE
 void test_u4() {
   printf("\ntest_u4\n");
-  size_t     sz = 4;
-  int       len = 1;
+  size_t len = 1;
   // ...   ...   ...   ...   ...
-  unsigned long *var_X  = NULL;
-  unsigned long *var_Y  = NULL;
-  unsigned long *var_Z  = NULL;
-  var_X            = (unsigned long *)(malloc( sz ));
-  var_Y            = (unsigned long *)(malloc( sz ));
-  var_Z            = (unsigned long *)(malloc( sz ));
+  unsigned long *var_X  = malloc( sizeof(unsigned long) );
+  unsigned long *var_Y  = malloc( sizeof(unsigned long) );
+  unsigned long *var_Z  = malloc( sizeof(unsigned long) );
   *var_X           = 4294967295; 
   *var_Y           = 0;
   *var_Z           = 1;
@@ -330,15 +316,11 @@ void test_u4() {
 // ------------------------------------------------------- TEST UNSIGNED 8 BYTE
 void test_u8() {
   printf("\ntest_u8\n");
-  size_t     sz = 8;
-  int       len = 1;
+  size_t len = 1;
   // ...   ...   ...   ...   ...
-  uint64_t *var_X  = NULL;
-  uint64_t *var_Y  = NULL;
-  uint64_t *var_Z  = NULL;
-  var_X            = (uint64_t *)(malloc( sz ));
-  var_Y            = (uint64_t *)(malloc( sz ));
-  var_Z            = (uint64_t *)(malloc( sz ));
+  unsigned long long *var_X  = malloc( sizeof(unsigned long long) );
+  unsigned long long *var_Y  = malloc( sizeof(unsigned long long) );
+  unsigned long long *var_Z  = malloc( sizeof(unsigned long long) );
   *var_X           = 18446744073709551615; // 9223372036854775807;
   *var_Y           = 0;
   *var_Z           = 1;
@@ -649,14 +631,6 @@ void test_array_u8() {
 
 // ------------------------------------------------------------- MAIN FUNCTION
 int main(int argc, char **argv) {
-  // int       rtn = 0;
-  // //uint64_t *ptr = NULL;
-  // size_t     sz = _ALLOC_SIZE_;
-  // int         i = 0;
-  // int       len = 8;
-  // // ptr           = (uint64_t *)(malloc( sz ));
-  // // ptr[0]        = (uint64_t)  (1234);
-
   int modeSelection = 0;
 
   if(argc > 1) {
