@@ -298,9 +298,9 @@ void test_u4() {
   *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   printf("\n");
-  printf("var_X: %f \n", *var_X);
-  printf("var_Y: %f \n", *var_Y);
-  printf("var_Z: %f \n", *var_Z);
+  printf("var_X: %lu \n", *var_X);
+  printf("var_Y: %lu \n", *var_Y);
+  printf("var_Z: %lu \n", *var_Z);
   // ======================================================
   printf("TESTING PUT...\n");
   printf("\t put dst:Y src:X \n"); // dst, src, nelem, stride, pe
@@ -310,9 +310,9 @@ void test_u4() {
                     1,
                     1 );
   // ======================================================
-  printf("var_X: %f \n", *var_X);
-  printf("var_Y: %f \n", *var_Y);
-  printf("var_Z: %f \n", *var_Z);
+  printf("var_X: %lu \n", *var_X);
+  printf("var_Y: %lu \n", *var_Y);
+  printf("var_Z: %lu \n", *var_Z);
   // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:Z src:X \n"); // dst, src, nelem, stride, pe
@@ -322,9 +322,9 @@ void test_u4() {
                     1,
                     1 ); 
   // ======================================================
-  printf("var_X: %f \n", *var_X);
-  printf("var_Y: %f \n", *var_Y);
-  printf("var_Z: %f \n", *var_Z);
+  printf("var_X: %lu \n", *var_X);
+  printf("var_Y: %lu \n", *var_Y);
+  printf("var_Z: %lu \n", *var_Z);
 }
 
 // ------------------------------------------------------- TEST UNSIGNED 8 BYTE
