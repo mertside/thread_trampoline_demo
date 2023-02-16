@@ -401,7 +401,7 @@ void print_array_u2(uint16_t *array, size_t length) {
 void print_array_u4(uint32_t *array, size_t length) {
   int i = 0;
   for (i = 0; i < length; i++) { 
-    printf("%f ", array[i]); 
+    printf("%lu ", array[i]); 
   }
   printf("\n");
 }
@@ -602,15 +602,12 @@ void test_array_u4() {
 // ------------------------------------------------- TEST ARRAY UNSIGNED 8 BYTE
 void test_array_u8() {
   printf("\ntest_array_u8\n");
-  size_t     sz = _ALLOC_SIZE_;
+  // size_t     sz = _ALLOC_SIZE_;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint64_t *arr_A = NULL;
-  uint64_t *arr_B = NULL;
-  uint64_t *arr_C = NULL;
-  arr_A           = (uint64_t *)(malloc( len * sz ));
-  arr_B           = (uint64_t *)(malloc( len * sz )); 
-  arr_C           = (uint64_t *)(malloc( len * sz )); 
+  uint64_t *arr_A = malloc( len * sizeof(uint64_t) );
+  uint64_t *arr_B = malloc( len * sizeof(uint64_t) );
+  uint64_t *arr_C = malloc( len * sizeof(uint64_t) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
