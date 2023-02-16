@@ -339,8 +339,7 @@ void test_u8() {
   var_X            = (uint64_t *)(malloc( sz ));
   var_Y            = (uint64_t *)(malloc( sz ));
   var_Z            = (uint64_t *)(malloc( sz ));
-  *var_X           = 18446744073709551615; 
-                  // 9223372036854775807;
+  *var_X           = 18446744073709551615; // 9223372036854775807;
   *var_Y           = 0;
   *var_Z           = 1;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
@@ -377,7 +376,7 @@ void test_u8() {
 // ============================================================================
 
 // ------------------------------------------------------------- PRINT ARRAY U4
-void print_array_u4(uint64_t *array, size_t length) {
+void print_array_u4(uint32_t *array, size_t length) {
   int i = 0;
   for (i = 0; i < length; i++) { 
     printf("%f ", array[i]); 
@@ -404,12 +403,12 @@ void test_array_u4() {
   size_t     sz = 4;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint64_t *arr_A = NULL;
-  uint64_t *arr_B = NULL;
-  uint64_t *arr_C = NULL;
-  arr_A           = (uint64_t *)(malloc( len * sz ));
-  arr_B           = (uint64_t *)(malloc( len * sz )); 
-  arr_C           = (uint64_t *)(malloc( len * sz )); 
+  uint32_t *arr_A = NULL;
+  uint32_t *arr_B = NULL;
+  uint32_t *arr_C = NULL;
+  arr_A           = (uint32_t *)(malloc( len * sz ));
+  arr_B           = (uint32_t *)(malloc( len * sz )); 
+  arr_C           = (uint32_t *)(malloc( len * sz )); 
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
