@@ -421,7 +421,7 @@ void print_array_u8(uint64_t *array, size_t length) {
 
 // ------------------------------------------------- TEST ARRAY UNSIGNED 1 BYTE
 void test_array_u1() {
-  printf("\ntest_array_u4\n");
+  printf("\ntest_array_u1\n");
   size_t     sz = 1;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
@@ -482,7 +482,7 @@ void test_array_u1() {
 
 // ------------------------------------------------- TEST ARRAY UNSIGNED 2 BYTE
 void test_array_u2() {
-  printf("\ntest_array_u4\n");
+  printf("\ntest_array_u2\n");
   size_t     sz = 2;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
@@ -510,8 +510,8 @@ void test_array_u2() {
   // ======================================================
   printf("\nTESTING PUT...\n");
   printf("\t put dst:B src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_ushort_put((unsigned long *)(arr_B),
-                     (unsigned long *)(arr_A),
+  xbrtime_ushort_put((unsigned short *)(arr_B),
+                     (unsigned short *)(arr_A),
                      len,
                      1,
                      1 ); 
@@ -525,8 +525,8 @@ void test_array_u2() {
  // ======================================================
   printf("\nTESTING GET...\n");
   printf("\t get dst:C src:A \n"); // dst, src, nelem, stride, pe
-  xbrtime_ushort_get((unsigned long *)(arr_C),
-                     (unsigned long *)(arr_A),
+  xbrtime_ushort_get((unsigned short *)(arr_C),
+                     (unsigned short *)(arr_A),
                      len,
                      1,
                      1 ); 
@@ -547,9 +547,9 @@ void test_array_u4() {
   // size_t     sz = 4;
   int       len = 8;
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
-  uint32_t *arr_A = malloc( len * sizeof(uint32_t) );
-  uint32_t *arr_B = malloc( len * sizeof(uint32_t) );
-  uint32_t *arr_C = malloc( len * sizeof(uint32_t) );
+  unsigned long *arr_A = malloc( len * sizeof(unsigned long) );
+  unsigned long *arr_B = malloc( len * sizeof(unsigned long) );
+  unsigned long *arr_C = malloc( len * sizeof(unsigned long) );
   // ...   ...   ...   ...   ...   ...   ...   ...   ...   ...
   int num       = 0; 
   for(int i=0; i < len; i++) {
